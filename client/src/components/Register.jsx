@@ -19,7 +19,7 @@ function Register() {
         e.preventDefault();
         console.log("Form submitted");
         try {
-            const response = await axios.post(`${API_URL}/register`, formData);
+            const response = await axios.post(`${API_URL}/api/auth/register`, formData);
             localStorage.setItem("role", response.data.user.role);
             localStorage.setItem("token", response.data.user.token);  
               

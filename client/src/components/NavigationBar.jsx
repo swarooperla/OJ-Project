@@ -10,6 +10,19 @@ function NavigationBar() {
        // localStorage.removeItem("email"); // optional
         navigate("/login");
     };
+    const handleLogo = () =>{
+        const token = localStorage.getItem('token');
+        const role = localStorage.getItem('role');
+        if(!token){
+            navigate('/');
+        }
+        else if(role === 'admin'){
+            navigate('/AdminDashboard');
+        }
+        else{
+            navigate('/UserDashboard');
+        }
+    }
     const location = useLocation();
     const isHome = location.pathname === '/';
     let authLink = null;
@@ -37,7 +50,7 @@ function NavigationBar() {
     return (
         <nav className="navbar navbar-dark bg-dark px-4">
 
-            <Link className="navbar-brand d-flex align-items-center" to="/">
+            <div className="navbar-brand d-flex align-items-center" style={{cursor: 'pointer'}} onClick={handleLogo}>
                 <img
                     src="https://cdn-icons-png.flaticon.com/512/732/732212.png" // You can replace this with your preferred logo
                     alt="logo"
@@ -46,7 +59,7 @@ function NavigationBar() {
                     className="me-2"
                 />
                 <span>CodeArena</span>
-            </Link>
+            </div>
 
             {authLink}
             {logOut}

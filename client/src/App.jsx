@@ -13,6 +13,8 @@ import MySubmissions from './components/MySubmissions';
 import Leaderboard from './components/Leaderboard';
 import ManageProblems from './components/ManageProblems';
 import ManageUsers from './components/ManageUsers';
+import CreateProblem from './components/CreateProblem';
+import EditProblem from './components/EditProblem';
 
 function App() {
   let browserRouter = createBrowserRouter([
@@ -58,6 +60,14 @@ function App() {
     {
       path : '/AdminDashboard/ManageUsers',
       element : <ManageUsers />,
+    },
+    {
+      path : '/AdminDashboard/ManageProblems/CreateProblem',
+      element : <CreateProblem />,
+    },
+    {
+      path : '/AdminDashboard/ManageProblems/EditProblem/:id',
+      element : <EditProblem />,
     },
     
   ]);
