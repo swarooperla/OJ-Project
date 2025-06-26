@@ -1,0 +1,72 @@
+import { useState } from 'react'
+import { createBrowserRouter, RouterProvider, Navigate} from 'react-router-dom';
+import RootLayout from './components/RootLayout';
+import './App.css'
+import Home from './components/Home';
+import Login from './components/Login';
+import Register from './components/Register';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import AdminDashboard from './components/AdminDashboard';
+import UserDashboard from './components/UserDashboard';
+import ProblemList from './components/ProblemList';
+import MySubmissions from './components/MySubmissions';
+import Leaderboard from './components/Leaderboard';
+import ManageProblems from './components/ManageProblems';
+import ManageUsers from './components/ManageUsers';
+
+function App() {
+  let browserRouter = createBrowserRouter([
+    {
+      path : '',
+      element : <RootLayout />,
+      children : [
+        {
+          path : '',
+          element : <Home />,
+        },
+        {
+          path : '/login',
+          element : <Login />,
+        },
+        {
+          path : '/register',
+          element : <Register />,
+        },
+      ]
+    },
+
+    {
+      path : '/AdminDashboard',
+      element : <AdminDashboard />,
+    },
+    {
+      path : '/AdminDashboard/ProblemList',
+      element : <ProblemList />,
+    },
+    {
+      path : '/AdminDashboard/MySubmissions',
+      element : <MySubmissions />,
+    },
+    {
+      path : '/AdminDashboard/Leaderboard',
+      element : <Leaderboard />,
+    },
+    {
+      path : '/AdminDashboard/ManageProblems',
+      element : <ManageProblems />,
+    },
+    {
+      path : '/AdminDashboard/ManageUsers',
+      element : <ManageUsers />,
+    },
+    
+  ]);
+
+  return (
+    <>
+      <RouterProvider router = {browserRouter}/>
+    </>
+  )
+}
+
+export default App
