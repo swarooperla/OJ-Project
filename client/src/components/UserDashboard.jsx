@@ -34,7 +34,7 @@ const UserDashboard = () => {
                         <div className="card-body">
                             <h5 className="card-title">Attempt Problems</h5>
                             <p className="card-text">Browse and solve coding challenges.</p>
-                            <button className="btn btn-success w-100">Start Solving</button>
+                            <button className="btn btn-success w-100" onClick={() => navigate('/UserDashboard/ProblemList')}>Start Solving</button>
                         </div>
                     </div>
                 </div>

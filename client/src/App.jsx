@@ -15,6 +15,7 @@ import ManageProblems from './components/ManageProblems';
 import ManageUsers from './components/ManageUsers';
 import CreateProblem from './components/CreateProblem';
 import EditProblem from './components/EditProblem';
+import CodeEditor from './components/codeEditor';
 
 function App() {
   let browserRouter = createBrowserRouter([
@@ -68,6 +69,18 @@ function App() {
     {
       path : '/AdminDashboard/ManageProblems/EditProblem/:id',
       element : <EditProblem />,
+    },
+    {
+      path : '/UserDashboard',
+      element : <UserDashboard />,
+    },
+    {
+      path : '/UserDashboard/ProblemList',
+      element : <ProblemList />,
+    },
+    {
+      path : '/CodeEditor/:id',
+      element : <CodeEditor />,
     },
     
   ]);
