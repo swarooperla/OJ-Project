@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import NavigationBar from './NavigationBar';
+import { useNavigate } from 'react-router-dom';
 
 const API_URL = 'http://localhost:8000';
 
 function ProblemList() {
+  const navigate = useNavigate();
   const [problems, setProblems] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -64,7 +66,7 @@ function ProblemList() {
                       <span className={`badge bg-${getDifficultyColor(prob.difficulty)}`}>
                         {prob.difficulty}
                       </span>
-                      <button className="btn btn-outline-primary btn-sm">
+                      <button className="btn btn-outline-primary btn-sm" onClick={() => navigate(`/CodeEditor/${prob._id}`)}>
                         Solve
                       </button>
                     </div>

@@ -48,7 +48,7 @@ export const getProbById = async(req, res) => {
     try {
         const problem = await Problem.findById(id);
         if(!problem){
-            res.status(404).json({message: 'Problem not found'});
+            return res.status(404).json({message: 'Problem not found'});
         }
         res.status(200).json(problem);
     } catch (error) {

@@ -106,7 +106,7 @@ function EditProblem() {
 
           <div className="col-md-6">
             <label className="form-label">Input Format</label>
-            <input
+            <textarea
               className="form-control"
               name="inputFormat"
               value={formData.inputFormat}
@@ -116,7 +116,7 @@ function EditProblem() {
 
           <div className="col-md-6">
             <label className="form-label">Output Format</label>
-            <input
+            <textarea
               className="form-control"
               name="outputFormat"
               value={formData.outputFormat}
@@ -126,7 +126,7 @@ function EditProblem() {
 
           <div className="col-md-6">
             <label className="form-label">Constraints</label>
-            <input
+            <textarea
               className="form-control"
               name="constraints"
               value={formData.constraints}
