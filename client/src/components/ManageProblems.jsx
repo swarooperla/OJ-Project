@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import NavigationBar from './NavigationBar';
 import axios from 'axios';
-const API_URL = 'http://localhost:8000'
+const API_URL = import.meta.env.VITE_API_URL;
 
 function ManageProblems() {
   const [problems, setProblems] = useState([]);
