@@ -21,59 +21,73 @@ function ProblemList() {
         setLoading(false);
       }
     };
-
     fetchProblems();
   }, []);
 
-  const getDifficultyColor = (level) => {
+  const getDifficultyClass = (level) => {
     switch (level.toLowerCase()) {
       case 'easy':
-        return 'success';
+        return 'text-green-600 bg-green-100';
       case 'medium':
-        return 'warning';
+        return 'text-yellow-700 bg-yellow-100';
       case 'hard':
-        return 'danger';
+        return 'text-red-600 bg-red-100';
       default:
-        return 'secondary';
+        return 'text-gray-600 bg-gray-100';
     }
   };
 
   return (
     <>
       <NavigationBar />
-      <div className="container py-5">
-        <h2 className="mb-4 text-center fw-bold">🧠 Problem List</h2>
+      <div className="max-w-5xl mx-auto px-4 py-6">
+        <h2 className="text-3xl font-bold text-center mb-6">🧠 Problem List</h2>
 
         {loading ? (
-          <div className="text-center text-muted">Loading problems...</div>
+          <div className="text-center text-gray-500">Loading problems...</div>
         ) : problems.length === 0 ? (
-          <div className="alert alert-info text-center">No problems available.</div>
+          <div className="text-center text-blue-500">No problems available.</div>
         ) : (
-          <div className="row g-4">
-            {problems.map((prob) => (
-              <div className="col-md-6 col-lg-4" key={prob._id}>
-                <div className="card shadow-sm h-100 border-start border-5 border-primary">
-                  <div className="card-body d-flex flex-column justify-content-between">
-                    <div>
-                      <h5 className="card-title">{prob.title}</h5>
-                      <p className="card-text text-muted" style={{ minHeight: "50px" }}>
-                        {prob.description.length > 100
-                          ? prob.description.slice(0, 100) + '...'
-                          : prob.description}
-                      </p>
-                    </div>
-                    <div className="d-flex justify-content-between align-items-center mt-3">
-                      <span className={`badge bg-${getDifficultyColor(prob.difficulty)}`}>
-                        {prob.difficulty}
-                      </span>
-                      <button className="btn btn-outline-primary btn-sm" onClick={() => navigate(`/CodeEditor/${prob._id}`)}>
-                        Solve
-                      </button>
-                    </div>
+          <div className="bg-white shadow-md rounded-xl overflow-hidden border border-gray-200">
+            <div className="flex justify-between bg-gray-100 px-6 py-3 text-sm font-semibold text-gray-600 border-b">
+              <div className="w-1/2">Title</div>
+              <div className="w-1/4 text-center">Difficulty</div>
+              <div className="w-1/4 text-right">Action</div>
+            </div>
+            <ul>
+              {problems.map((prob, idx) => (
+                <li
+                  key={prob._id}
+                  className={`flex items-center justify-between px-6 py-4 text-sm ${
+                    idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'
+                  } hover:bg-gray-100 transition`}
+                >
+                  {/* Title */}
+                  <div className="w-1/2 text-gray-800 font-medium truncate">{prob.title}</div>
+
+                  {/* Difficulty */}
+                  <div className="w-1/4 text-center">
+                    <span
+                      className={`px-3 py-1 text-xs rounded-full font-medium ${getDifficultyClass(
+                        prob.difficulty
+                      )}`}
+                    >
+                      {prob.difficulty}
+                    </span>
                   </div>
-                </div>
-              </div>
-            ))}
+
+                  {/* Solve Button */}
+                  <div className="w-1/4 text-right">
+                    <button
+                      onClick={() => navigate(`/CodeEditor/${prob._id}`)}
+                      className="text-indigo-600 hover:text-indigo-800 font-semibold"
+                    >
+                      Solve →
+                    </button>
+                  </div>
+                </li>
+              ))}
+            </ul>
           </div>
         )}
       </div>

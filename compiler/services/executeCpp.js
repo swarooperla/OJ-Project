@@ -17,7 +17,7 @@ const executeCpp = async (filePath, inputPath) => {
     const outputFilePath = path.join(outputs_dir, `${jobId}.exe`);
     return new Promise((resolve, reject) => {
         exec(
-            `g++ ${filePath} -o ${outputFilePath} -mconsole && cd ${outputs_dir} && .\\${jobId}.exe < ${inputPath}`,
+            `g++ ${filePath} -o ${outputFilePath}  && cd ${outputs_dir} && .\\${jobId}.exe < ${inputPath}`,
             (error, stdout, stderr) => {
                 if(error){
                     return reject({ error, stderr });
