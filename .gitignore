@@ -11,6 +11,11 @@ node_modules
 dist
 dist-ssr
 *.local
+# .gitignore (root level)
+client/.env
+server/.env
+compiler/.env
+
 
 # Editor directories and files
 .vscode/*
