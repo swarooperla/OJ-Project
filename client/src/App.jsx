@@ -15,7 +15,7 @@ import ManageProblems from './components/ManageProblems';
 import ManageUsers from './components/ManageUsers';
 import CreateProblem from './components/CreateProblem';
 import EditProblem from './components/EditProblem';
-import CodeEditor from './components/codeEditor';
+import CodeEditor from './components/CodeEditor';
 
 function App() {
   let browserRouter = createBrowserRouter([

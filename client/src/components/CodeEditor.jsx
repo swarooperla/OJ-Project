@@ -73,7 +73,20 @@ function CodeEditor() {
 
     try {
       const res = await axios.post(`${COMPILER_URL}/api/compiler/submit`, { language, code, problemId: id });
-      setOutput1(res.data.output);
+      const verdict = res.data.verdict;
+      setOutput1(verdict);
+      console.log(verdict, "from console");
+      const user = JSON.parse(localStorage.getItem('user'));
+      const userId = user?._id;
+      const problemTitle = problem.title;
+      await axios.post(`${API_URL}/api/submissions/addSubmission`, {
+        userId,
+        problemId: id,
+        language,
+        code,
+        verdict,
+        problemTitle,
+      })
     } catch (err) {
       console.error('Error submitting code:', err);
       setOutput1('Failed to submit code!!');

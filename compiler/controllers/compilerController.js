@@ -6,7 +6,7 @@ import axios from 'axios';
 
 dotenv.config();
 
-const API_URL = process.env.API_URL;
+const SERVER_API_URL = process.env.SERVER_API_URL;
 
 export const executeRun = async (req, res) => {
   try {
@@ -32,55 +32,71 @@ export const executeRun = async (req, res) => {
 };
 
 
-export const executeSubmit = async (req, res) => {
-  try {
-    const { language, code, problemId } = req.body;
+  export const executeSubmit = async (req, res) => {
+    try {
+      const { language, code, problemId } = req.body;
 
-    if (!language || !code || !problemId) {
-      return res.status(400).json({ output: "Missing language/code/problemId" });
-    }
+      if (!language || !code || !problemId) {
+        return res.status(400).json({ verdict: "Missing language/code/problemId" });
+      }
+      console.log(code);
 
-    const response = await axios.get(`${API_URL}/api/problems/getProbById/${problemId}`);
-    const problem = response.data;
+      const response = await axios.get(`${SERVER_API_URL}/api/problems/getProbById/${problemId}`);
+      const problem = response.data;
 
-    if (!problem?.hiddenTestcases?.length) {
-      return res.status(404).json({ output: "No hidden test cases found for this problem" });
-    }
+      if (!problem?.hiddenTestcases?.length) {
+        return res.status(404).json({ verdict: "No hidden test cases found for this problem" });
+      }
 
-    const filePath = generateFile(language, code);
-    let allPassed = true;
-    let failedCase = null;
+      const filePath = generateFile(language, code);
+      const normalize = str => str.trimEnd();
+      const isDev = process.env.NODE_ENV !== 'production';
 
-    const normalize = str => str.replace(/\s+$/, '');
-    const isDev = process.env.NODE_ENV !== 'production';
+      let allPassed = true;
+      let verdict = "Accepted";
+      let failedCase = null;
 
-    for (const test of problem.hiddenTestcases) {
-      try {
-        const inputPath = generateInput(test.input);
-        const output = await executeCpp(filePath, inputPath);
-        if (normalize(output) !== normalize(test.output)) {
+      for (const test of problem.hiddenTestcases) {
+        try {
+          const inputPath = generateInput(test.input);
+          const output = await executeCpp(filePath, inputPath);
+
+          if (normalize(output) !== normalize(test.output)) {
+            allPassed = false;
+            verdict = "Wrong Answer";
+            failedCase = {
+              input: test.input,
+              expected: test.output,
+              received: output
+            };
+            break;
+          }
+
+        } catch (err) {
           allPassed = false;
-          failedCase = { input: test.input, expected: test.output, received: output };
+          verdict = {
+            compilation: "Compilation Error",
+            runtime: "Runtime Error",
+            timeout: "Time Limit Exceeded"
+          }[err.type] || "Unknown Error";
+
+          failedCase = {
+            input: test.input,
+            expected: test.output,
+            received: err.stderr || err.message || "Error during execution"
+          };
+
           break;
         }
-      } catch (err) {
-        allPassed = false;
-        failedCase = { input: test.input, expected: test.output, received: "Runtime/Compile Error" };
-        break;
       }
-    }
 
-    if (allPassed) {
-      return res.status(200).json({ output: "✅ All hidden test cases passed!" });
-    } else {
-      return res.status(200).json({
-        output: isDev
-          ? `❌ Test case failed!\nInput: ${failedCase.input}\nExpected: ${failedCase.expected}\nReceived: ${failedCase.received}`
-          : "❌ Some hidden test case failed. Please try again."
-      });
+      const responsePayload = { verdict };
+      if (isDev && failedCase) responsePayload.failedCase = failedCase;
+
+      return res.status(200).json(responsePayload);
+
+    } catch (error) {
+      console.error("❌ Submit failed:", error);
+      return res.status(500).json({ verdict: "❌ Server error during submission", error: error.message });
     }
-  } catch (error) {
-    console.error("Submit failed:", error);
-    res.status(500).json({ output: "❌ Server error during execution" });
-  }
-};
+  };

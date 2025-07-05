@@ -1,7 +1,9 @@
 FROM node:22-alpine
 WORKDIR /app
-RUN apk update && apk add --no-cache g++
-COPY . .
+RUN apk update && apk add --no-cache g++ make python3
+RUN npm install -g nodemon
+COPY package*.json ./
 RUN npm install
+COPY . .
 EXPOSE 9000
-CMD ["node", "compiler.js"]
+CMD ["nodemon", "compiler.js"]

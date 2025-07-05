@@ -1,0 +1,15 @@
+version: '3'
+services:
+  compiler:
+    build:
+      context: ./compiler
+      dockerfile: Dockerfile
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./compiler:/app
+      - /app/node_modules     # Prevents overwriting container's node_modules
+    environment:
+      - NODE_ENV=development
+      - SERVER_API_URL=http://host.docker.internal:8000
+    command: npm run dev      # Ensures nodemon is used

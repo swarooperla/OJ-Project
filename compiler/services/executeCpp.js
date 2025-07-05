@@ -13,18 +13,40 @@ if (!fs.existsSync(outputs_dir)) {
 
 const executeCpp = async (filePath, inputPath) => {
   const jobId = path.basename(filePath).split('.')[0];
-  const outputFilePath = path.join(outputs_dir, jobId); // ❌ remove .exe
+  const outputFilePath = path.join(outputs_dir, jobId);
 
   return new Promise((resolve, reject) => {
-    const command = `g++ ${filePath} -o ${outputFilePath} && ${outputFilePath} < ${inputPath}`;
-    exec(command, (error, stdout, stderr) => {
-      if (error) {
-        return reject({ error, stderr });
+    const compileCmd = `g++ ${filePath} -o ${outputFilePath}`;
+    exec(compileCmd, (compErr, stdout, stderr) => {
+      if (compErr) {
+        return reject({
+          type: 'compilation',
+          stderr,
+          message: 'Compilation Error'
+        });
       }
-      if (stderr) {
-        return reject(stderr);
-      }
-      resolve(stdout);
+
+      const runCmd = `timeout 2s ${outputFilePath} < ${inputPath}`;
+      exec(runCmd, (runErr, stdout, stderr) => {
+        if (runErr) {
+          const isTimeout = runErr.killed || runErr.signal === 'SIGTERM';
+          return reject({
+            type: isTimeout ? 'timeout' : 'runtime',
+            stderr,
+            message: isTimeout ? 'Time Limit Exceeded' : 'Runtime Error'
+          });
+        }
+
+        if (stderr) {
+          return reject({
+            type: 'runtime',
+            stderr,
+            message: 'Runtime Error (stderr)'
+          });
+        }
+
+        return resolve(stdout);
+      });
     });
   });
 };
