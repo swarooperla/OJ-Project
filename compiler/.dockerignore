@@ -12,6 +12,9 @@ node_modules
 dist
 dist-ssr
 *.local
+codes/
+inputs/
+output/
 
 # Local env
 .env
