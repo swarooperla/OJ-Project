@@ -132,8 +132,8 @@ function CreateProblem() {
             <label className="block font-semibold text-gray-800 mb-2">Hidden Testcases</label>
             {formData.hiddenTestcases.map((tc, idx) => (
               <div key={idx} className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center mb-2">
-                <input type="text" placeholder={`Input ${idx + 1}`} value={tc.input} onChange={(e) => updateHiddenTestcase(idx, 'input', e.target.value)} className="md:col-span-5 border rounded-lg px-3 py-2" required />
-                <input type="text" placeholder={`Output ${idx + 1}`} value={tc.output} onChange={(e) => updateHiddenTestcase(idx, 'output', e.target.value)} className="md:col-span-5 border rounded-lg px-3 py-2" required />
+                <textarea type="text" placeholder={`Input ${idx + 1}`} value={tc.input} onChange={(e) => updateHiddenTestcase(idx, 'input', e.target.value)} className="md:col-span-5 border rounded-lg px-3 py-2" required />
+                <textarea type="text" placeholder={`Output ${idx + 1}`} value={tc.output} onChange={(e) => updateHiddenTestcase(idx, 'output', e.target.value)} className="md:col-span-5 border rounded-lg px-3 py-2" required />
                 <button type="button" onClick={() => removeHiddenTestcase(idx)} className="md:col-span-2 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">
                   ❌ Remove
                 </button>

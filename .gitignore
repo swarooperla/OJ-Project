@@ -15,6 +15,9 @@ dist-ssr
 client/.env
 server/.env
 compiler/.env
+compiler/codes
+compiler/inputs
+compiler/outputs
 
 
 # Editor directories and files

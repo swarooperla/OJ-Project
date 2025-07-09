@@ -13,7 +13,7 @@ if (!fs.existsSync(outputs_dir)) {
 
 const executeCpp = async (filePath, inputPath) => {
   const jobId = path.basename(filePath).split(".")[0];
-  const outputFilePath = path.join(outputs_dir, jobId);
+  const outputFilePath = path.join(outputs_dir, `${jobId}.exe`);
 
   return new Promise((resolve, reject) => {
     const compileCmd = `g++ ${filePath} -o ${outputFilePath}`;
@@ -23,6 +23,7 @@ const executeCpp = async (filePath, inputPath) => {
           type: "compilation",
           stderr,
           message: "Compilation Error",
+          outputFilePath,
         });
       }
 
@@ -36,6 +37,7 @@ const executeCpp = async (filePath, inputPath) => {
               type: isTimeout ? "timeout" : "runtime",
               stderr,
               message: isTimeout ? "Time Limit Exceeded" : "Runtime Error",
+              outputFilePath,
             });
           }
 
@@ -44,10 +46,11 @@ const executeCpp = async (filePath, inputPath) => {
               type: "runtime",
               stderr,
               message: "Runtime Error (stderr)",
+              outputFilePath,
             });
           }
 
-          return resolve(stdout);
+          return resolve({stdout, outputFilePath});
         }
       );
     });
