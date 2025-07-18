@@ -18,7 +18,10 @@ app.use("/api/auth", authRoutes);
 app.use("/api/problems", problemRoutes)
 app.use('/api/submissions', submissionRoutes);
 app.use('/ai-review', aiRoutes);
+app.get("/test", (req, res) => {
+    res.send("Server's server is alive!");
+  });
 
-app.listen(8000, () => {
+app.listen(8000, '0.0.0.0', () => {
     console.log("Server is running on port 8000");
 })

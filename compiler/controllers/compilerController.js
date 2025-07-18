@@ -81,6 +81,7 @@ export const executeRun = async (req, res) => {
       outputFilePath = error.outputFilePath;
     }
     await cleanupFiles([filePath, inputPath, outputFilePath]);
+  console.log(error);
     res.status(500).json({
       output: "❌ Server error during execution",
       error: error.message,
@@ -93,6 +94,9 @@ export const executeRun = async (req, res) => {
 };
 
 export const executeSubmit = async (req, res) => {
+  let filePath;
+  let inputPath;
+  let outputFilePath;
   try {
     const { language, code, problemId } = req.body;
 
@@ -113,7 +117,7 @@ export const executeSubmit = async (req, res) => {
         .json({ verdict: "No hidden test cases found for this problem" });
     }
 
-    const filePath = generateFile(language, code);
+    filePath = generateFile(language, code);
     const normalize = (str) => str.trimEnd();
     const isDev = process.env.NODE_ENV !== "production";
 
@@ -124,7 +128,7 @@ export const executeSubmit = async (req, res) => {
 
     for (const test of problem.hiddenTestcases) {
       try {
-        const inputPath = generateInput(test.input);
+        inputPath = generateInput(test.input);
         tempFiles.push(inputPath);
 
         let result;
@@ -147,7 +151,7 @@ export const executeSubmit = async (req, res) => {
         }
 
         const output = result.stdout;
-        const outputFilePath = result.outputFilePath;
+        outputFilePath = result.outputFilePath;
         if (outputFilePath) tempFiles.push(outputFilePath);
 
         if (normalize(output) !== normalize(test.output)) {

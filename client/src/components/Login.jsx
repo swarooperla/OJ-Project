@@ -29,7 +29,8 @@ function Login() {
                 navigate('/UserDashboard');
             }
         } catch (error) {
-            alert(error.response?.data || "Login failed");
+            console.log(error);
+            alert( error.response.data.message || "Login failed");
         }
     };
 

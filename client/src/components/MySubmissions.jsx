@@ -21,7 +21,7 @@ const MySubmissions = () => {
 
       try {
         console.log(userId);
-        const res = await axios.get(`${API_URL}/api/submissions/user`, {
+        const res = await axios.get(`${API_URL}/api/submissions`, {
           params: { userId },
         });
         console.log(res.data);

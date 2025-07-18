@@ -24,7 +24,7 @@ function Register() {
             localStorage.setItem("token", response.data.user.token);  
               
             alert(response.data.message);
-        //    console.log(response.data.user);
+        //  console.log(response.data.user);
             if(response.data.user.role === 'admin'){
                 navigate('/AdminDashboard');
             }

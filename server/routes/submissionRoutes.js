@@ -1,7 +1,7 @@
 import express from 'express';
-import { addSubmission, getUserSubmissions } from '../controllers/submissionsController.js';
+import { addSubmission, getSubmissions } from '../controllers/submissionsController.js';
 const router = express.Router();
 
 router.post('/addSubmission', addSubmission);
-router.get('/user', getUserSubmissions);
+router.get('', getSubmissions);
 export default router;

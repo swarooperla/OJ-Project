@@ -1,15 +1,21 @@
 import Submission from '../models/submission.js';
 
-export const getUserSubmissions = async (req, res) => {
-  const { userId } = req.query;
-  console.log(userId);
+export const getSubmissions = async (req, res) => {
+  const { userId, problemId } = req.query;
+
+  // Build dynamic query object
+  const query = {};
+  if (userId) query.userId = userId;
+  if (problemId) query.problemId = problemId;
+
   try {
-    const submissions = await Submission.find({ userId }).sort({ createdAt: -1 });
+    const submissions = await Submission.find(query).sort({ createdAt: -1 });
     res.status(200).json(submissions);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching submissions', error });
   }
 };
+
 
 
 export const addSubmission = async (req, res) => {

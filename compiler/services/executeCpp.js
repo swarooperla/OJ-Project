@@ -26,9 +26,10 @@ const executeCpp = async (filePath, inputPath) => {
           outputFilePath,
         });
       }
+      const runCmd = inputPath ? `${outputFilePath} < ${inputPath}` : `${outputFilePath}`;
 
       exec(
-        `${outputFilePath} < ${inputPath}`,
+        runCmd,
         { timeout: 2000 },
         (runErr, stdout, stderr) => {
           const isTimeout = runErr && runErr.killed;

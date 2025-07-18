@@ -42,7 +42,7 @@ int main() {
 
     return 0;
 }
-`
+`,
   };
 
   const { id } = useParams();
@@ -60,6 +60,8 @@ int main() {
   const [activeTab, setActiveTab] = useState("description");
   const [aiReview, setAiReview] = useState("");
   const [aiLoading, setAiLoading] = useState(false);
+  const [selectedCode, setSelectedCode] = useState(null);
+  const [submissions, setSubmissions] = useState([]);
 
   useEffect(() => {
     const fetchProblem = async () => {
@@ -77,7 +79,23 @@ int main() {
         setLoading(false);
       }
     };
+
+    const fetchSubmissions = async () => {
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (!user?._id || !id) return;
+
+      try {
+        const res = await axios.get(`${API_URL}/api/submissions`, {
+          params: { userId: user._id, problemId: id },
+        });
+        setSubmissions(res.data || []);
+      } catch (err) {
+        console.error("Error fetching submissions:", err);
+      }
+    };
+
     fetchProblem();
+    fetchSubmissions();
   }, [id]);
 
   const getDifficultyColorClass = (level) => {
@@ -165,7 +183,11 @@ int main() {
         verdict,
         problemTitle: problem.title,
       });
-    } catch(error) {
+      const refreshed = await axios.get(`${API_URL}/api/submissions`, {
+        params: { userId: user._id, problemId: id },
+      });
+      setSubmissions(refreshed.data || []);
+    } catch (error) {
       console.log(error);
       setOutput1("Failed to submit code!!");
     } finally {
@@ -206,6 +228,14 @@ int main() {
       </div>
     );
   }
+
+  const handleOpenModal = (code) => {
+    setSelectedCode(code);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedCode(null);
+  };
 
   return (
     <>
@@ -274,8 +304,42 @@ int main() {
               </div>
             )}
             {activeTab === "submissions" && (
-              <div>
-                <em>Submissions tab coming soon!</em>
+              <div className="submissions-box">
+                <h4>Submissions</h4>
+                {loading ? (
+                  <p>Loading...</p>
+                ) : submissions.length === 0 ? (
+                  <p>No submissions yet.</p>
+                ) : (
+                  <ul className="submission-list">
+                    {submissions.map((sub, idx) => (
+                      <li key={sub._id} className="submission-row">
+                        <span>{idx + 1}.</span>
+                        <span
+                          className={`verdict ${sub.verdict.toLowerCase()}`}
+                        >
+                          {sub.verdict}
+                        </span>
+                        <span>{sub.language.toUpperCase()}</span>
+                        <button onClick={() => handleOpenModal(sub.code)}>
+                          View Code
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+
+                {/* Code Modal */}
+                {selectedCode && (
+                  <div className="code-modal">
+                    <div className="modal-content">
+                      <button className="close-btn" onClick={handleCloseModal}>
+                        ×
+                      </button>
+                      <pre>{selectedCode}</pre>
+                    </div>
+                  </div>
+                )}
               </div>
             )}
           </div>
@@ -356,7 +420,8 @@ int main() {
                 {(isRunning || isSubmitting) && <div className="spinner" />}
                 <strong>Output:</strong>
                 <pre>
-                  {mode === "run" && `Output-1:\n${output1}\nOutput-2:\n${output2}`}
+                  {mode === "run" &&
+                    `Output-1:\n${output1}\nOutput-2:\n${output2}`}
                   {mode === "submit" && output1}
                   {mode === "custom" && customOutput}
                 </pre>

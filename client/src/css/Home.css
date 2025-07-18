@@ -1,0 +1,314 @@
+ /* Home.css */
+
+.home-container {
+    min-height: 100vh;
+    background: var(--color-background);
+    color: var(--color-text);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--space-32) var(--space-8);
+  }
+  
+  .home-hero {
+    text-align: center;
+    margin-bottom: var(--space-48);
+    padding: var(--space-80) var(--space-2);
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    width: 100%;
+  }
+  
+  .home-title {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: var(--space-16);
+  }
+  
+  .home-subtitle {
+    font-family: var(--font-body);
+    font-size: 1.25rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-24);
+  }
+  
+  .home-actions {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-16);
+  }
+  
+  .home-btn {
+    font-family: var(--font-body);
+    font-size: 1.1rem;
+    padding: var(--space-8) var(--space-24);
+    border-radius: var(--radius-md);
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    box-shadow: var(--shadow-btn);
+    font-weight: 600;
+    display: inline-block;
+  }
+  
+  .home-btn-primary {
+    background: var(--color-surface);
+    color: var(--color-primary);
+    border: 2px solid var(--color-primary);
+  }
+  
+  .home-btn-primary:hover,
+  .home-btn-primary:focus {
+    background: var(--color-primary);
+    color: #fff;
+  }
+  
+  .home-btn-secondary {
+    background: var(--color-surface);
+    color: var(--color-primary);
+    border: 2px solid var(--color-primary);
+  }
+  
+  .home-btn-secondary:hover,
+  .home-btn-secondary:focus {
+    background: var(--color-primary);
+    color: #fff;
+  }
+  
+  .home-features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-24);
+    margin-top: var(--space-32);
+    margin-bottom: var(--space-32); /* Add space below features */
+    width: 100%;
+    max-width: 100vw;
+  }
+  
+  .home-stats {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-32);
+    margin-bottom: var(--space-32); /* Add space below stats */
+    width: 100%;
+    /* Optionally, add a subtle border or shadow for separation */
+  }
+  
+  .feature-card {
+    background: var(--color-surface);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-card);
+    padding: var(--space-24);
+    min-width: 220px;
+    flex: 1 1 250px;
+    max-width: 280px;
+    text-align: center;
+    margin-bottom: var(--space-16);
+  }
+  
+  .feature-card h2 {
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    color: var(--color-text);
+    margin-bottom: var(--space-8);
+  }
+  
+  .feature-card p {
+    font-family: var(--font-body);
+    color: var(--color-text-muted);
+    font-size: 1rem;
+  }
+  
+  /* Consistent card section layout for all main sections */
+.card-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  width: 90vw;
+  max-width: 1200px;
+  margin: 0 auto var(--space-32) auto;
+  gap: var(--space-24);
+}
+
+.card {
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-24);
+  margin: var(--space-8) 0;
+  width: 100%;
+  max-width: 340px;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.card:hover {
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.12);
+  transform: translateY(-2px) scale(1.03);
+}
+
+/* Feature cards use the same card layout and effect */
+
+
+/* Stats Section */
+
+.stat-card {
+  min-width: 200px;
+  max-width: 320px;
+  text-align: center;
+  border-radius: var(--radius-lg);
+  font-size: 1.1rem;
+  background: linear-gradient(135deg, #f3f4f6 60%, #fff 100%);
+}
+.stat-icon {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: var(--space-8);
+}
+.stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+.stat-label {
+  color: var(--color-text-muted);
+  font-size: 1rem;
+}
+
+/* Testimonials Section */
+
+.testimonial-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-24);
+  justify-content: center;
+  width: 100%;
+}
+.testimonial-card {
+  max-width: 320px;
+  min-width: 220px;
+  border-radius: var(--radius-md);
+  text-align: left;
+  margin-bottom: var(--space-16);
+  font-size: 1.05rem;
+}
+.testimonial-quote {
+  font-style: italic;
+  color: var(--color-text);
+  margin-bottom: var(--space-8);
+}
+.testimonial-user {
+  font-weight: 600;
+  font-size: 0.98rem;
+}
+
+/* Gamification Section */
+
+.badge-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-24);
+  justify-content: center;
+  width: 100%;
+}
+.badge-card {
+  min-width: 180px;
+  max-width: 260px;
+  text-align: center;
+  border-radius: var(--radius-md);
+  font-size: 1.05rem;
+}
+.badge-icon {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: var(--space-8);
+}
+.badge-name {
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: var(--space-4);
+  display: block;
+}
+.badge-desc {
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+}
+
+/* Enlarged features section */
+.enlarged-features-section {
+  width: 98vw;
+  max-width: 1400px;
+  margin: 0 auto var(--space-32) auto;
+  gap: var(--space-32);
+}
+.enlarged-feature-card {
+  min-height: 220px;
+  max-width: 400px;
+  font-size: 1.15rem;
+  padding-top: var(--space-32);
+  padding-bottom: var(--space-32);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .card-section {
+    width: 98vw;
+    max-width: 98vw;
+  }
+}
+@media (max-width: 900px) {
+  .card-section,
+  .testimonial-list,
+  .badge-list {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-16);
+    width: 100%;
+  }
+  .feature-card,
+  .stat-card,
+  .testimonial-card,
+  .badge-card {
+    max-width: 100%;
+    width: 100%;
+  }
+}
+
+.colorful-hero {
+  background: linear-gradient(120deg, #fbbf24 0%, #38bdf8 60%, #f472b6 100%);
+  color: #111;
+  position: relative;
+  overflow: hidden;
+}
+.colorful-hero .home-title,
+.colorful-hero .home-subtitle {
+  color: #111;
+  text-shadow: 0 2px 8px rgba(255,255,255,0.15);
+}
+.colorful-hero .home-actions {
+  z-index: 1;
+}
+
+/* Optional: add a subtle overlay for better text contrast */
+.colorful-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.55);
+  z-index: 0;
+}
+.colorful-hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+.home-stats.card-section .section-title {
+  width: 100%;
+  text-align: center;
+  margin-bottom: var(--space-16);
+  margin-top: 0;
+}

@@ -1,66 +1,67 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import CodeBox_logo from "../assets/CodeBox_logo.png";
+import '../css/NavigationBar.css'; // Import your external CSS
 
 function NavigationBar() {
     const navigate = useNavigate();
+
     const handleLogout = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("role");
-       // localStorage.removeItem("email"); // optional
-        navigate("/login");
+        navigate("/");
     };
-    const handleLogo = () =>{
+
+    const handleLogo = () => {
         const token = localStorage.getItem('token');
         const role = localStorage.getItem('role');
-        if(!token){
+        if (!token) {
             navigate('/');
-        }
-        else if(role === 'admin'){
+        } else if (role === 'admin') {
             navigate('/AdminDashboard');
-        }
-        else{
+        } else {
             navigate('/UserDashboard');
         }
-    }
+    };
+
     const location = useLocation();
     const isHome = location.pathname === '/';
+    const isRegister = location.pathname === '/register';
+    const isLogin = location.pathname === '/login';
+
     let authLink = null;
     let logOut = null;
-    const isRegister = location.pathname ==='/register';
-    const isLogin = location.pathname === '/login';
-    if(isHome){
+
+    if (isHome) {
         authLink = (
-            <ul className="navbar-nav ms-auto d-flex flex-row gap-3">
-            <li className="nav-item">
-                <Link className="nav-link text-white" to="/login">Login</Link>
-            </li>
-            <li className="nav-item">
-                <Link className="nav-link text-white" to="/register">Register</Link>
-            </li>
-        </ul>
+            <ul className="navibar-nav">
+                <li>
+                    <Link className="navbar-link" to="/login">Login</Link>
+                </li>
+                <li>
+                    <Link className="navbar-link" to="/register">Register</Link>
+                </li>
+            </ul>
         );
     }
-    if(!isHome && !isRegister && !isLogin){
+
+    if (!isHome && !isRegister && !isLogin) {
         logOut = (
-            <button className="btn btn-outline-danger" onClick={handleLogout}>Logout</button>
+            <button className="button button-outline-danger" onClick={handleLogout}>Logout</button>
         );
     }
 
     return (
-        <nav className="navbar navbar-dark bg-dark px-4">
-
-            <div className="navbar-brand d-flex align-items-center" style={{cursor: 'pointer'}} onClick={handleLogo}>
+        <nav className="navbar">
+            <div className="navibar-brand" onClick={handleLogo}>
                 <img
-                    src="https://cdn-icons-png.flaticon.com/512/732/732212.png" // You can replace this with your preferred logo
+                    src={CodeBox_logo}
                     alt="logo"
-                    width="30"
-                    height="30"
-                    className="me-2"
+                    width="40"
+                    height="40"
                 />
-                <span>CodeArena</span>
+                <span>ByteCode</span>
             </div>
-
             {authLink}
             {logOut}
         </nav>

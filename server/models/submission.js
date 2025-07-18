@@ -40,12 +40,8 @@ const submissionSchema = new mongoose.Schema({
   },
   memoryUsed: {
     type: Number 
-  },
-  submittedAt: {
-    type: Date,
-    default: Date.now
   }
-});
+}, { timestamps: true });
 
 const Submission = mongoose.model('Submission', submissionSchema);
 export default Submission;

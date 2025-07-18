@@ -4,21 +4,21 @@ import jwt from 'jsonwebtoken'
 export const registerUser = async (req, res) => {
     try {
         //get all the data from frontend
-        const {fullname, email, password, confirmpassword} = req.body;
-        
+        const { fullname, email, password, confirmpassword } = req.body;
+
         //check that all the data should exist
-        if(!(fullname && email && password && confirmpassword)){
+        if (!(fullname && email && password && confirmpassword)) {
             return res.status(400).send("All fields are required");
         }
 
         //Check if pass == confirmpass or not!
-        if(password !== confirmpassword){
+        if (password !== confirmpassword) {
             return res.status(400).send("Passwords are not matching");
         }
 
         //check is user is already exist
         const existingUser = await User.findOne({ email });
-        if(existingUser){
+        if (existingUser) {
             return res.status(400).send("User already exists with this email");
         }
 
@@ -49,29 +49,34 @@ export const registerUser = async (req, res) => {
 
 export const loginUser = async (req, res) => {
     try {
-        const {email, password} = req.body;
+        const { email, password } = req.body;
 
-    if(!(email && password)){
-        return res.status(400).json({message: "All fields are required"});
-    }
+        if (!(email && password)) {
+            return res.status(400).json({ message: "All fields are required" });
+        }
 
-    const user = await User.findOne({email});
-    if(!user){
-        return res.status(400).json({message: "Username you specified is not correct"});
-    }
-    
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if(!isPasswordValid){
-        return res.status(400).json({message: "Password is incorrect"});
-    }
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(400).json({ message: "Email you specified is not correct" });
+        }
 
-    const token = jwt.sign({id: user._id, email}, process.env.SECRET_KEY, {
-        expiresIn: '1h',
-    });
-    user.token = token;
-    user.password = undefined;
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if (!isPasswordValid) {
+            return res.status(400).json({ message: "Password is incorrect" });
+        }
 
-    return res.status(200).json({message: "Login Successful", user});
+        const token = jwt.sign({ id: user._id, email }, process.env.SECRET_KEY, {
+            expiresIn: '1h',
+        });
+        const userResponse = {
+            _id: user._id,
+            fullname: user.fullname,
+            email: user.email,
+            role: user.role,
+            token: token,
+        };
+
+        return res.status(200).json({ message: "Login Successful", user: userResponse });
     } catch (error) {
         console.error("Login error:", error);
         return res.status(500).json({ message: "Something went wrong" });
