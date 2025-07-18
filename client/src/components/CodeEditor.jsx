@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import NavigationBar from "./NavigationBar";
-import "../css/CodeEditor.css";
+import "../css/codeEditor.css";
 import Editor from "@monaco-editor/react";
 
 const API_URL = import.meta.env.VITE_API_URL;
