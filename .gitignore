@@ -18,6 +18,7 @@ compiler/.env
 compiler/codes
 compiler/inputs
 compiler/outputs
+keys/
 
 
 # Editor directories and files

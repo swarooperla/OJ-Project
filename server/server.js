@@ -7,13 +7,15 @@ import submissionRoutes from './routes/submissionRoutes.js'
 import aiRoutes from './routes/aiRoutes.js'
 import dotenv from 'dotenv';
 const app = express();
-app.use(cors());
 dotenv.config();
 DBconnection();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+app.use(cors({
+  origin: "https://oj-project-theta.vercel.app", // frontend URL
+  credentials: true
+}));
 app.use("/api/auth", authRoutes);
 app.use("/api/problems", problemRoutes)
 app.use('/api/submissions', submissionRoutes);
