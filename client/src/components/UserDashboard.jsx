@@ -44,7 +44,7 @@ const UserDashboard = () => {
                         <div className="card-body">
                             <h5 className="card-title">My Submissions</h5>
                             <p className="card-text">View your submitted solutions and results.</p>
-                            <button className="btn btn-primary w-100">View Submissions</button>
+                            <button className="btn btn-primary w-100" onClick={() => navigate('/UserDashboard/MySubmissions')}>View Submissions</button>
                         </div>
                     </div>
                 </div>
@@ -54,7 +54,7 @@ const UserDashboard = () => {
                         <div className="card-body">
                             <h5 className="card-title">Leaderboard</h5>
                             <p className="card-text">See how you rank against others.</p>
-                            <button className="btn btn-warning w-100">View Leaderboard</button>
+                            <button className="btn btn-warning w-100" onClick={() => navigate('/UserDashboard/Leaderboard')}>View Leaderboard</button>
                         </div>
                     </div>
                 </div>

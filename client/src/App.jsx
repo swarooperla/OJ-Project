@@ -82,6 +82,14 @@ function App() {
       path : '/CodeEditor/:id',
       element : <CodeEditor />,
     },
+    {
+      path : '/UserDashboard/MySubmissions',
+      element : <MySubmissions />,
+    },
+    {
+      path : '/UserDashboard/Leaderboard',
+      element : <Leaderboard />,
+    },
     
   ]);
 
