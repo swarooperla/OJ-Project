@@ -16,6 +16,7 @@ import ManageUsers from './components/ManageUsers';
 import CreateProblem from './components/CreateProblem';
 import EditProblem from './components/EditProblem';
 import CodeEditor from './components/CodeEditor';
+import Compiler from './components/Compiler';
 
 function App() {
   let browserRouter = createBrowserRouter([
@@ -89,6 +90,14 @@ function App() {
     {
       path : '/UserDashboard/Leaderboard',
       element : <Leaderboard />,
+    },
+    {
+      path : '/UserDashboard/Compiler',
+      element : <Compiler />,
+    },
+    {
+      path : '/AdminDashboard/Compiler',
+      element : <Compiler />,
     },
     
   ]);

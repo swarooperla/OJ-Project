@@ -5,6 +5,7 @@ import problemRoutes from './routes/problemRoutes.js'
 import DBconnection from './database/db.js';
 import submissionRoutes from './routes/submissionRoutes.js'
 import aiRoutes from './routes/aiRoutes.js'
+import userRoutes from './routes/userRoutes.js'
 import dotenv from 'dotenv';
 const app = express();
 dotenv.config();
@@ -32,6 +33,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/problems", problemRoutes)
 app.use('/api/submissions', submissionRoutes);
 app.use('/ai-review', aiRoutes);
+app.use('/api/users', userRoutes);
 app.get("/test", (req, res) => {
   res.send("Server's server is alive!");
 });

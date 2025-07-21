@@ -1,1 +1,222 @@
- 
+/* ProblemList.css */
+
+.problem-list-bg {
+  min-height: 100vh;
+  background: var(--color-background);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-32) var(--space-8);
+}
+
+.problem-list-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-card);
+  border-radius: var(--radius-lg);
+  padding: var(--space-32) var(--space-24);
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.problem-list-title {
+  color: var(--color-text);
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: var(--space-24);
+  text-align: center;
+}
+
+.problem-list-table {
+  width: 100%;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.problem-list-header-row {
+  display: flex;
+  justify-content: space-between;
+  background: var(--color-surface);
+  padding: var(--space-16) var(--space-16);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  border-bottom: 1px solid var(--color-border);
+}
+.problem-list-header-title {
+  flex: 2;
+}
+.problem-list-header-tags {
+  flex: 1.2;
+  text-align: left;
+}
+.problem-list-header-difficulty {
+  flex: 1;
+  text-align: center;
+}
+.problem-list-header-action {
+  flex: 1;
+  text-align: right;
+}
+
+.problem-list-ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.problem-list-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1rem;
+  padding: var(--space-16) var(--space-16);
+  transition: background 0.2s;
+}
+.problem-list-row.even {
+  background: rgba(255,255,255,0.01);
+}
+.problem-list-row.odd {
+  background: rgba(255,255,255,0.04);
+}
+.problem-list-row:hover {
+  background: rgba(34,211,166,0.08);
+}
+
+.problem-list-title-cell {
+  flex: 2;
+  color: var(--color-text);
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.problem-list-tags-cell {
+  flex: 1.2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8) var(--space-4);
+  align-items: flex-start;
+  min-width: 80px;
+  padding: var(--space-4) 0;
+}
+.problem-list-tag-badge {
+  font-size: 0.92em;
+  padding: 0.22em 1.2em;
+  background: rgba(160, 160, 160, 0.10);
+  color: var(--color-text-muted);
+  border-radius: 999px;
+  font-weight: 500;
+  margin-bottom: var(--space-8);
+  min-width: 70px;
+  text-align: center;
+}
+.problem-list-tag-empty {
+  color: var(--color-text-muted);
+  font-size: 0.95em;
+}
+.problem-list-difficulty-cell {
+  flex: 1;
+  text-align: center;
+}
+.problem-list-action-cell {
+  flex: 1;
+  text-align: right;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.25em 1em;
+  border-radius: 999px;
+  font-size: 0.95em;
+  font-weight: 600;
+}
+.badge-success {
+  background: rgba(34, 211, 166, 0.15);
+  color: var(--color-success);
+}
+.badge-warning {
+  background: rgba(251, 191, 36, 0.15);
+  color: var(--color-warning);
+}
+.badge-error {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--color-error);
+}
+.badge-muted {
+  background: rgba(160, 160, 160, 0.10);
+  color: var(--color-text-muted);
+}
+
+.problem-list-solve-btn {
+  background: var(--color-primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: var(--space-8) var(--space-16);
+  font-size: 1rem;
+  font-family: var(--font-body);
+  font-weight: 600;
+  box-shadow: var(--shadow-btn);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.problem-list-solve-btn:hover, .problem-list-solve-btn:focus {
+  background: var(--color-white);
+  color: var(--color-primary);
+}
+
+.problem-list-loading, .problem-list-empty {
+  color: var(--color-text-muted);
+  text-align: center;
+  padding: var(--space-24) 0;
+  font-size: 1.1rem;
+}
+
+.problem-list-search-row {
+  display: flex;
+  gap: var(--space-16);
+  margin-bottom: var(--space-24);
+  justify-content: flex-end;
+  max-width: 1100px;
+  width: 100%;
+}
+.problem-list-search-input {
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-8) var(--space-16);
+  font-size: 1rem;
+  font-family: var(--font-body);
+  outline: none;
+  transition: border 0.2s;
+  min-width: 200px;
+}
+.problem-list-search-input:focus {
+  border-color: var(--color-primary);
+}
+
+@media (max-width: 700px) {
+  .problem-list-card {
+    padding: var(--space-16) var(--space-4);
+  }
+  .problem-list-header-row, .problem-list-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-8);
+    padding: var(--space-8) var(--space-8);
+  }
+  .problem-list-title-cell, .problem-list-difficulty-cell, .problem-list-action-cell {
+    flex: unset;
+    width: 100%;
+    text-align: left;
+  }
+  .problem-list-header-title, .problem-list-header-difficulty, .problem-list-header-action {
+    flex: unset;
+    width: 100%;
+    text-align: left;
+  }
+} 

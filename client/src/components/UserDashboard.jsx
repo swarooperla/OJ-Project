@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import NavigationBar from "./NavigationBar";
+import '../css/Dashboard.css';
 
 const UserDashboard = () => {
     const navigate = useNavigate();
@@ -23,44 +24,34 @@ const UserDashboard = () => {
     return (
         <>
         <NavigationBar/>
-        <div className="container py-5">
-            <div className="d-flex justify-content-between align-items-center mb-4">
-                <h2>Welcome to Your Dashboard</h2>
+        <div className="dashboard-bg">
+            <div className="dashboard-header">
+                <h2 className="dashboard-title">Welcome to Your Dashboard</h2>
             </div>
-
-            <div className="row g-4">
-                <div className="col-md-4">
-                    <div className="card shadow-sm">
-                        <div className="card-body">
-                            <h5 className="card-title">Attempt Problems</h5>
-                            <p className="card-text">Browse and solve coding challenges.</p>
-                            <button className="btn btn-success w-100" onClick={() => navigate('/UserDashboard/ProblemList')}>Start Solving</button>
-                        </div>
-                    </div>
+            <div className="dashboard-grid">
+                <div className="dashboard-card">
+                    <h5 className="dashboard-card-title">Attempt Problems</h5>
+                    <p className="dashboard-card-text">Browse and solve coding challenges.</p>
+                    <button className="dashboard-btn dashboard-btn-success" onClick={() => navigate('/UserDashboard/ProblemList')}>Start Solving</button>
                 </div>
-
-                <div className="col-md-4">
-                    <div className="card shadow-sm">
-                        <div className="card-body">
-                            <h5 className="card-title">My Submissions</h5>
-                            <p className="card-text">View your submitted solutions and results.</p>
-                            <button className="btn btn-primary w-100" onClick={() => navigate('/UserDashboard/MySubmissions')}>View Submissions</button>
-                        </div>
-                    </div>
+                <div className="dashboard-card">
+                    <h5 className="dashboard-card-title">My Submissions</h5>
+                    <p className="dashboard-card-text">View your submitted solutions and results.</p>
+                    <button className="dashboard-btn dashboard-btn-primary" onClick={() => navigate('/UserDashboard/MySubmissions')}>View Submissions</button>
                 </div>
-
-                <div className="col-md-4">
-                    <div className="card shadow-sm">
-                        <div className="card-body">
-                            <h5 className="card-title">Leaderboard</h5>
-                            <p className="card-text">See how you rank against others.</p>
-                            <button className="btn btn-warning w-100" onClick={() => navigate('/UserDashboard/Leaderboard')}>View Leaderboard</button>
-                        </div>
-                    </div>
+                <div className="dashboard-card">
+                    <h5 className="dashboard-card-title">Leaderboard</h5>
+                    <p className="dashboard-card-text">See how you rank against others.</p>
+                    <button className="dashboard-btn dashboard-btn-warning" onClick={() => navigate('/UserDashboard/Leaderboard')}>View Leaderboard</button>
+                </div>
+                {/* Compiler Feature Card */}
+                <div className="dashboard-card">
+                    <h5 className="dashboard-card-title">Compiler</h5>
+                    <p className="dashboard-card-text">Run code with your own inputs.</p>
+                    <button className="dashboard-btn dashboard-btn-accent" onClick={() => navigate('/UserDashboard/Compiler')}>Open Compiler</button>
                 </div>
             </div>
-
-            <div className="mt-5 text-center text-muted">
+            <div className="dashboard-footer">
                 <small>Keep practicing. Every submission counts!</small>
             </div>
         </div>

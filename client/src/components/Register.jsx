@@ -1,6 +1,10 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
+import '../css/Register.css';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 const API_URL = import.meta.env.VITE_API_URL;
 
 function Register() {
@@ -15,56 +19,65 @@ function Register() {
     const handleChange = (e) =>{
         setFormData({...formData, [e.target.name]: e.target.value});
     }
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        const role = localStorage.getItem("role");
+        if(token && role){
+            if(role === 'admin'){
+                navigate('/AdminDashboard');
+            }else{
+                navigate('/UserDashboard');
+            }
+        }
+    }, []);
     const handleSubmit = async (e) =>{
         e.preventDefault();
-        console.log("Form submitted");
         try {
             const response = await axios.post(`${API_URL}/api/auth/register`, formData);
             localStorage.setItem("role", response.data.user.role);
             localStorage.setItem("token", response.data.user.token);  
-              
-            alert(response.data.message);
-        //  console.log(response.data.user);
-            if(response.data.user.role === 'admin'){
-                navigate('/AdminDashboard');
-            }
-            else{
-                navigate('/UserDashboard');
-            }
+            toast.success("Successfully registered");
+            setTimeout(() => {
+                if(response.data.user.role === 'admin'){
+                    navigate('/AdminDashboard');
+                }
+                else{
+                    navigate('/UserDashboard');
+                }
+            }, 1000);
         } catch (error) {
             console.log(error.response.data);
-            alert(error.response.data);
+            toast.error(error.response?.data?.message || "Registration failed");
         } 
     };
 
     return (
-        <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "100vh", backgroundColor: "" }}>
-            
-            <div className="d-flex flex-column justify-content-center align-items-center p-5 rounded" style={{backgroundColor: "#2b2d42", height: "80vh", width: "80vh"}}>
-                <h2 className="text-white mb-4 align-self-start">Register</h2>
-                <form style={{ width: '100%'}} onSubmit={handleSubmit}>
-                    <div className="mb-3">
-                        <label htmlFor="fullname" className="form-label text-black">Fullname</label>
-                        <input name="fullname" type="text" className="form-control" id="fullname" onChange={handleChange} />
+        <div className="register-bg">
+            <div className="register-card">
+                <h2 className="register-title">Register</h2>
+                <form className="register-form" onSubmit={handleSubmit}>
+                    <div className="register-form-group">
+                        <label htmlFor="fullname" className="register-label">Fullname</label>
+                        <input name="fullname" type="text" className="register-input" id="fullname" onChange={handleChange} />
                     </div>
-                    <div className="mb-3">
-                        <label htmlFor="email" className="form-label text-black">Email address</label>
-                        <input name="email" type="email" className="form-control" id="email" onChange={handleChange} />
+                    <div className="register-form-group">
+                        <label htmlFor="email" className="register-label">Email address</label>
+                        <input name="email" type="email" className="register-input" id="email" onChange={handleChange} />
                     </div>
-                    <div className="mb-3">
-                        <label htmlFor="password" className="form-label text-black">Password</label>
-                        <input name="password" type="password" className="form-control" id="password" onChange={handleChange} />
+                    <div className="register-form-group">
+                        <label htmlFor="password" className="register-label">Password</label>
+                        <input name="password" type="password" className="register-input" id="password" onChange={handleChange} />
                     </div>
-                    <div className="mb-3">
-                        <label htmlFor="confirmPassword" className="form-label text-black">Confirm password</label>
-                        <input name="confirmpassword" type="password" className="form-control" id="confirmPassword" onChange={handleChange}  />
+                    <div className="register-form-group">
+                        <label htmlFor="confirmPassword" className="register-label">Confirm password</label>
+                        <input name="confirmpassword" type="password" className="register-input" id="confirmPassword" onChange={handleChange}  />
                     </div>
-                    <button type="submit" className="btn btn-primary mt-3">Register</button>
+                    <button type="submit" className="register-btn">Register</button>
                 </form>
             </div>
-
+            <ToastContainer />
         </div>
     )
 }
 
-export default Register
+export default Register;

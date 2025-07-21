@@ -12,7 +12,8 @@ export const controlCreateProblem = async (req, res) => {
     sampleOutput1,
     sampleInput2,
     sampleOutput2,
-    hiddenTestcases
+    hiddenTestcases,
+    tags = []
   } = req.body;
 
   // Basic field validation
@@ -35,7 +36,8 @@ export const controlCreateProblem = async (req, res) => {
       sampleInput2,
       sampleOutput2,
       difficulty,
-      hiddenTestcases: hiddenTestcases || []
+      hiddenTestcases: hiddenTestcases || [],
+      tags: tags || []
     });
 
     res.status(200).json({
@@ -86,6 +88,9 @@ export const getProbById = async (req, res) => {
 export const updateProblem = async (req, res) => {
   const { id } = req.params;
   const updatedFields = req.body;
+  if (!updatedFields.tags) {
+    updatedFields.tags = [];
+  }
 
   try {
     const updated = await Problem.findByIdAndUpdate(id, updatedFields, {

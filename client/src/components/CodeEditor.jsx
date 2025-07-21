@@ -267,6 +267,13 @@ int main() {
             {activeTab === "description" && (
               <div className="problem-box">
                 <h3>{problem.title}</h3>
+                {problem.tags && problem.tags.length > 0 && (
+                  <div className="problem-tags-row" style={{margin: '8px 0 12px 0', display: 'flex', gap: '8px', flexWrap: 'wrap'}}>
+                    {problem.tags.map((tag, i) => (
+                      <span key={i} className="badge badge-muted problem-list-tag-badge">{tag}</span>
+                    ))}
+                  </div>
+                )}
                 <div
                   className={`badge ${getDifficultyColorClass(
                     problem?.difficulty
@@ -417,14 +424,17 @@ int main() {
               output2 ||
               customOutput) && (
               <div className="output-box">
-                {(isRunning || isSubmitting) && <div className="spinner" />}
                 <strong>Output:</strong>
-                <pre>
-                  {mode === "run" &&
-                    `Output-1:\n${output1}\nOutput-2:\n${output2}`}
-                  {mode === "submit" && output1}
-                  {mode === "custom" && customOutput}
-                </pre>
+                {isRunning || isSubmitting ? (
+                  <p>Executing...</p>
+                ) : (
+                  <pre>
+                    {mode === "run" &&
+                      `Output-1:\n${output1}\nOutput-2:\n${output2}`}
+                    {mode === "submit" && output1}
+                    {mode === "custom" && customOutput}
+                  </pre>
+                )}
               </div>
             )}
           </div>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import NavigationBar from './NavigationBar';
 import axios from 'axios';
+import '../css/ManageProblems.css';
 const API_URL = import.meta.env.VITE_API_URL;
 
 function ManageProblems() {
@@ -28,21 +29,33 @@ function ManageProblems() {
 
     try {
       await axios.delete(`${API_URL}/api/problems/deleteProblem/${id}`);
-
       setProblems(prev => prev.filter(p => p._id !== id));
     } catch (err) {
       console.error('Delete failed:', err);
     }
   };
 
+  const getBadgeClass = (level) => {
+    switch (level.toLowerCase()) {
+      case 'easy':
+        return 'manage-problem-badge badge-success';
+      case 'medium':
+        return 'manage-problem-badge badge-warning';
+      case 'hard':
+        return 'manage-problem-badge badge-error';
+      default:
+        return 'manage-problem-badge badge-muted';
+    }
+  };
+
   return (
     <>
     <NavigationBar />
-    <div className="container py-5">
-      <div className="d-flex justify-content-between align-items-center mb-4">
-        <h2 className="fw-bold">Manage Problems</h2>
+    <div className="manage-problems-bg">
+      <div className="manage-problems-header">
+        <h2 className="manage-problems-title">Manage Problems</h2>
         <button
-          className="btn btn-primary"
+          className="manage-problems-add-btn"
           onClick={() => navigate('/AdminDashboard/ManageProblems/CreateProblem')}
         >
           + Add Problem
@@ -50,36 +63,30 @@ function ManageProblems() {
       </div>
 
       {loading ? (
-        <p className="text-muted">Loading problems...</p>
+        <p className="manage-problems-loading">Loading problems...</p>
       ) : problems.length === 0 ? (
-        <div className="alert alert-info">No problems added yet.</div>
+        <div className="manage-problems-empty">No problems added yet.</div>
       ) : (
-        <div className="row g-4">
+        <div className="manage-problems-grid">
           {problems.map(problem => (
-            <div className="col-md-6 col-lg-4" key={problem._id}>
-              <div className="card shadow-sm h-100">
-                <div className="card-body d-flex flex-column justify-content-between">
-                  <div>
-                    <h5 className="card-title">{problem.title}</h5>
-                    <p className="card-text">
-                      <span className="badge bg-secondary">{problem.difficulty}</span>
-                    </p>
-                  </div>
-                  <div className="mt-3 d-flex justify-content-between">
-                    <button
-                      className="btn btn-sm btn-outline-warning"
-                      onClick={() => navigate(`/AdminDashboard/ManageProblems/EditProblem/${problem._id}`)}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      className="btn btn-sm btn-outline-danger"
-                      onClick={() => handleDelete(problem._id)}
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </div>
+            <div className="manage-problem-card" key={problem._id}>
+              <div>
+                <h5 className="manage-problem-title">{problem.title}</h5>
+                <span className={getBadgeClass(problem.difficulty)}>{problem.difficulty}</span>
+              </div>
+              <div className="manage-problem-actions">
+                <button
+                  className="manage-problem-btn manage-problem-btn-edit"
+                  onClick={() => navigate(`/AdminDashboard/ManageProblems/EditProblem/${problem._id}`)}
+                >
+                  Edit
+                </button>
+                <button
+                  className="manage-problem-btn manage-problem-btn-delete"
+                  onClick={() => handleDelete(problem._id)}
+                >
+                  Delete
+                </button>
               </div>
             </div>
           ))}

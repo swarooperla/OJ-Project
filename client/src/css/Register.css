@@ -1,1 +1,97 @@
- 
+/* Register.css */
+
+.register-bg {
+  min-height: 100vh;
+  background: var(--color-background);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  /* padding-top: 40px; removed */
+}
+
+.register-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-card);
+  border-radius: var(--radius-lg);
+  padding: var(--space-48) var(--space-32);
+  min-width: 400px;
+  max-width: 520px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin-top: 50px;
+  margin-bottom: 80px;
+}
+
+@media (max-width: 600px) {
+  .register-card {
+    min-width: 0;
+    max-width: 98vw;
+    padding: var(--space-32) var(--space-8);
+    margin-top: 32px;
+  }
+}
+
+.register-title {
+  color: var(--color-text);
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: var(--space-24);
+  text-align: left;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+}
+
+.register-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.register-label {
+  color: var(--color-text-muted);
+  font-size: 1rem;
+  font-family: var(--font-body);
+  margin-bottom: 2px;
+}
+
+.register-input {
+  background: var(--color-background);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-8) var(--space-16);
+  font-size: 1rem;
+  font-family: var(--font-body);
+  outline: none;
+  transition: border 0.2s;
+}
+.register-input:focus {
+  border-color: var(--color-primary);
+}
+
+.register-btn {
+  background: var(--color-primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: var(--space-8) var(--space-16);
+  font-size: 1.1rem;
+  font-family: var(--font-body);
+  font-weight: 600;
+  box-shadow: var(--shadow-btn);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  margin-top: var(--space-16);
+}
+.register-btn:hover, .register-btn:focus {
+  background: var(--color-white);
+  color: var(--color-primary);
+} 

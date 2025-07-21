@@ -1,7 +1,10 @@
 import axios from "axios";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect} from "react";
+import '../css/Login.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const API_URL = import.meta.env.VITE_API_URL;
 
 function Login() {
@@ -13,6 +16,17 @@ function Login() {
     const handleChange = (e) =>{
         setFromData({...formData, [e.target.name]: e.target.value});
     }
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        const role = localStorage.getItem("role");
+        if(token && role){
+            if(role === 'admin'){
+                navigate('/AdminDashboard');
+            }else{
+                navigate('/UserDashboard');
+            }
+        }
+    }, []);
     const handleSubmit = async (e) =>{
         e.preventDefault();
         try {
@@ -20,47 +34,39 @@ function Login() {
             localStorage.setItem("user", JSON.stringify(response.data.user));
             localStorage.setItem("role", response.data.user.role);
             localStorage.setItem("token", response.data.user.token);
-        //    console.log("Login response:", response.data);
-            alert(response.data.message);
-
-            if(response.data.user.role === 'admin'){
-                navigate('/AdminDashboard');
-            }else{
-                navigate('/UserDashboard');
-            }
+            toast.success("Successfully logged in");
+            setTimeout(() => {
+                if(response.data.user.role === 'admin'){
+                    navigate('/AdminDashboard');
+                }else{
+                    navigate('/UserDashboard');
+                }
+            }, 1000);
         } catch (error) {
             console.log(error);
-            alert( error.response.data.message || "Login failed");
+            toast.error(error.response?.data?.message || "Login failed");
         }
     };
 
     return (
-        <div className="d-flex justify-content-center align-items-center position-relative" style={{ minHeight: "100vh", backgroundColor: "" }}>
-            <div className="text-center position-absolute top-0 start-5 p-3 mt-5" style={{color: "black"}}>
-                {/* <h3>Welcome to CodeArena</h3> */}
-                {/* <h4>Please login to continue.</h4> */}
-            </div>
-            <div
-                className="d-flex flex-column justify-content-center align-items-center p-5 rounded mb-5"
-                style={{ backgroundColor: "#2b2d42", height: "50vh", width: "80vh" }}
-            >
-                <h2 className = "text-white mb-4 align-self-start">Login</h2>
-                <form style={{width: '100%'}} onSubmit={handleSubmit}>
-                    <div className="mb-3">
-                        <label htmlFor="email" className="form-label text-black">Email address</label>
-                        <input name="email" type="email" className="form-control" id="email" placeholder="Enter email" onChange={handleChange} />
+        <div className="login-bg">
+            <div className="login-card">
+                <h2 className="login-title">Login</h2>
+                <form className="login-form" onSubmit={handleSubmit}>
+                    <div className="login-form-group">
+                        <label htmlFor="email" className="login-label">Email address</label>
+                        <input name="email" type="email" className="login-input" id="email" placeholder="Enter email" onChange={handleChange} />
                     </div>
-                    <div className="mb-3">
-                        <label htmlFor="password" className="form-label text-black">Password</label>
-                        <input name="password" type="password" className="form-control" id="password" placeholder="Enter password" onChange={handleChange} />
+                    <div className="login-form-group">
+                        <label htmlFor="password" className="login-label">Password</label>
+                        <input name="password" type="password" className="login-input" id="password" placeholder="Enter password" onChange={handleChange} />
                     </div>
-                    <button type="submit" className="btn btn-primary">Login</button>
+                    <button type="submit" className="login-btn">Login</button>
                 </form>
-                
-                
             </div>
+            <ToastContainer />
         </div>
     );
 }
 
-export default Login
+export default Login;

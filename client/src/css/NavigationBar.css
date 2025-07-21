@@ -6,7 +6,7 @@
   color: var(--color-text);
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  /* justify-content: space-between; removed for custom alignment */
   padding: var(--space-16) var(--space-32);
   box-shadow: var(--shadow-card);
   border-bottom: 1px solid var(--color-border);
@@ -16,6 +16,12 @@
   top: 0;
 }
 
+.navbar-content {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
 /* Brand/logo section */
 .navibar-brand {
   display: flex;
@@ -23,7 +29,7 @@
   font-family: var(--font-heading);
   font-size: 1.5rem;
   font-weight: 700;
-  gap: var(--space-2);
+  gap: var(--space-16); /* more space between logo and links */
   cursor: pointer;
   user-select: none;
   transition: color 0.2s;
@@ -40,7 +46,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: var(--space-32);
+  gap: var(--space-16); /* less gap for tighter grouping */
   list-style: none;
   margin: 0;
   padding: 5px;
@@ -50,15 +56,19 @@
   font-family: var(--font-body);
   font-size: 1rem;
   padding: var(--space-8) var(--space-16);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-md); /* match logout button */
   text-decoration: none;
-  transition: background 0.2s, color 0.2s;
+  transition: background 0.2s, color 0.2s, border 0.2s;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface); /* lighter background for better contrast */
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
 }
 
 .navbar-link:hover,
 .navbar-link:focus {
-  background: var(--color-primary);
+  background: var(--color-accent); /* accent color on hover */
   color: #fff;
+  border-color: var(--color-accent);
   outline: none;
 }
 

@@ -1,1 +1,137 @@
- 
+/* MySubmissions.css */
+
+.submissions-bg {
+  min-height: 100vh;
+  background: var(--color-background);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-32) var(--space-8);
+}
+
+.submissions-title {
+  color: var(--color-text);
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: var(--space-24);
+  text-align: center;
+}
+
+.submissions-search-row {
+  display: flex;
+  gap: var(--space-16);
+  margin-bottom: var(--space-24);
+  justify-content: flex-end;
+  max-width: 800px;
+  width: 100%;
+}
+.submissions-search-input {
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-8) var(--space-16);
+  font-size: 1rem;
+  font-family: var(--font-body);
+  outline: none;
+  transition: border 0.2s;
+  min-width: 180px;
+}
+.submissions-search-input:focus {
+  border-color: var(--color-primary);
+}
+
+.submission-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-card);
+  border-radius: var(--radius-lg);
+  padding: var(--space-32) var(--space-24);
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto var(--space-24) auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+}
+
+.submission-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-16);
+  margin-bottom: var(--space-8);
+}
+
+.submission-badge {
+  display: inline-block;
+  padding: 0.25em 1em;
+  border-radius: 999px;
+  font-size: 0.95em;
+  font-weight: 600;
+}
+.badge-success {
+  background: rgba(34, 211, 166, 0.15);
+  color: var(--color-success);
+}
+.badge-error {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--color-error);
+}
+.badge-warning {
+  background: rgba(251, 191, 36, 0.15);
+  color: var(--color-warning);
+}
+
+.submission-problem-title {
+  background: rgba(34, 211, 238, 0.10);
+  color: var(--color-accent);
+  padding: 0.25em 1em;
+  border-radius: 999px;
+  font-size: 0.95em;
+  font-weight: 600;
+}
+.submission-language {
+  background: rgba(52, 245, 197, 0.10);
+  color: var(--color-primary);
+  padding: 0.25em 1em;
+  border-radius: 999px;
+  font-size: 0.95em;
+  font-weight: 600;
+}
+.submission-time {
+  color: var(--color-text-muted);
+  font-size: 0.95em;
+  font-weight: 500;
+}
+
+.submission-code-block {
+  background: var(--color-background);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-16);
+  font-size: 1em;
+  font-family: var(--font-code);
+  overflow-x: auto;
+}
+
+.submissions-loading, .submissions-empty {
+  color: var(--color-text-muted);
+  text-align: center;
+  padding: var(--space-24) 0;
+  font-size: 1.1rem;
+}
+
+@media (max-width: 700px) {
+  .submission-card {
+    padding: var(--space-16) var(--space-4);
+    max-width: 98vw;
+  }
+  .submission-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-8);
+  }
+} 

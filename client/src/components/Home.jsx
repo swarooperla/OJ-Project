@@ -5,36 +5,36 @@ import '../css/Home.css';
 function Home() {
   // Example static data (replace with real data as needed)
   const stats = [
-    { icon: "💡", label: "Problems", value: "100+", color: "#fbbf24" },
-    { icon: "👥", label: "Active Users", value: "100+", color: "#38bdf8" },
-    { icon: "🚀", label: "Submissions Today", value: "1,024", color: "#f472b6" },
+    { icon: "💡", label: "Problems", value: "100+", color: "var(--color-warning)" },
+    { icon: "👥", label: "Active Users", value: "100+", color: "var(--color-accent)" },
+    { icon: "🚀", label: "Submissions Today", value: "1,024", color: "var(--color-error)" },
   ];
 
   const testimonials = [
     {
       quote: "ByteCode helped me land my first internship!",
       user: "— Priya S.",
-      color: "#fbbf24"
+      color: "var(--color-warning)"
     },
     {
       quote: "The leaderboard keeps me motivated every day.",
       user: "— Alex T.",
-      color: "#38bdf8"
+      color: "var(--color-accent)"
     },
     {
       quote: "I love the instant feedback on my code.",
       user: "— Samir R.",
-      color: "#f472b6"
+      color: "var(--color-error)"
     },
   ];
 
   const badges = [
-    { icon: "🏅", name: "Streak Master", desc: "Solve problems 7 days in a row", color: "#fbbf24" },
-    { icon: "🎯", name: "Accuracy Pro", desc: "Achieve 90% correct submissions", color: "#38bdf8" },
-    { icon: "⚡", name: "Speedster", desc: "Solve a problem in under 5 minutes", color: "#f472b6" },
+    { icon: "🏅", name: "Streak Master", desc: "Solve problems 7 days in a row", color: "var(--color-warning)" },
+    { icon: "🎯", name: "Accuracy Pro", desc: "Achieve 90% correct submissions", color: "var(--color-accent)" },
+    { icon: "⚡", name: "Speedster", desc: "Solve a problem in under 5 minutes", color: "var(--color-error)" },
   ];
 
-  const featureColors = ["#fbbf24", "#38bdf8", "#f472b6"];
+  const featureColors = ["var(--color-warning)", "var(--color-accent)", "var(--color-error)"];
   const featureTitles = [
     { title: "📝 Practice Problems", desc: "Sharpen your skills with a variety of coding challenges." },
     { title: "🏆 Leaderboard", desc: "Compete with others and track your progress in real time." },

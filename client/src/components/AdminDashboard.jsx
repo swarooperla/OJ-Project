@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import NavigationBar from "./NavigationBar";
+import '../css/Dashboard.css';
 
 const AdminDashboard = () => {
     const navigate = useNavigate();
@@ -14,74 +15,48 @@ const AdminDashboard = () => {
         }
     }, []);
 
-
     return (
         <>
         <NavigationBar />
-        <div className="container py-5">
-            <div className="d-flex justify-content-between align-items-center mb-4">
-                <h2>Admin Dashboard</h2>
+        <div className="dashboard-bg">
+            <div className="dashboard-header">
+                <h2 className="dashboard-title">Admin Dashboard</h2>
             </div>
-
-            <div className="row g-4">
-
-                {/* User-side buttons */}
-                <div className="col-md-3">
-                    <div className="card shadow-sm h-100">
-                        <div className="card-body">
-                            <h5 className="card-title">Attempt Problems</h5>
-                            <p className="card-text">Try and solve coding challenges.</p>
-                            <button className="btn btn-success w-100" onClick={() => navigate('/AdminDashboard/ProblemList')}>Start Solving</button>
-                        </div>
-                    </div>
+            <div className="dashboard-grid">
+                <div className="dashboard-card">
+                    <h5 className="dashboard-card-title">Attempt Problems</h5>
+                    <p className="dashboard-card-text">Try and solve coding challenges.</p>
+                    <button className="dashboard-btn dashboard-btn-success" onClick={() => navigate('/AdminDashboard/ProblemList')}>Start Solving</button>
                 </div>
-
-                <div className="col-md-3">
-                    <div className="card shadow-sm h-100">
-                        <div className="card-body">
-                            <h5 className="card-title">My Submissions</h5>
-                            <p className="card-text">Check your submission history.</p>
-                            <button className="btn btn-primary w-100" onClick={() => navigate('/AdminDashboard/MySubmissions')}>View Submissions</button>
-                        </div>
-                    </div>
+                <div className="dashboard-card">
+                    <h5 className="dashboard-card-title">My Submissions</h5>
+                    <p className="dashboard-card-text">Check your submission history.</p>
+                    <button className="dashboard-btn dashboard-btn-primary" onClick={() => navigate('/AdminDashboard/MySubmissions')}>View Submissions</button>
                 </div>
-
-                <div className="col-md-3">
-                    <div className="card shadow-sm h-100">
-                        <div className="card-body">
-                            <h5 className="card-title">Leaderboard</h5>
-                            <p className="card-text">Track top users and scores.</p>
-                            <button className="btn btn-warning w-100" onClick={() => navigate('/AdminDashboard/Leaderboard')}>View Leaderboard</button>
-                        </div>
-                    </div>
+                <div className="dashboard-card">
+                    <h5 className="dashboard-card-title">Leaderboard</h5>
+                    <p className="dashboard-card-text">Track top users and scores.</p>
+                    <button className="dashboard-btn dashboard-btn-warning" onClick={() => navigate('/AdminDashboard/Leaderboard')}>View Leaderboard</button>
                 </div>
-
-                {/* Admin-only buttons */}
-                
-
-                <div className="col-md-3">
-                    <div className="card shadow-sm h-100">
-                        <div className="card-body">
-                            <h5 className="card-title">Manage Problems</h5>
-                            <p className="card-text">View, update, or delete problems.</p>
-                            <button className="btn btn-outline-info w-100" onClick={() => navigate('/AdminDashboard/ManageProblems')}>Manage Problems</button>
-                        </div>
-                    </div>
+                {/* Compiler Feature Card */}
+                <div className="dashboard-card">
+                    <h5 className="dashboard-card-title">Compiler</h5>
+                    <p className="dashboard-card-text">Run code with your own inputs.</p>
+                    <button className="dashboard-btn dashboard-btn-accent" onClick={() => navigate('/AdminDashboard/Compiler')}>Open Compiler</button>
                 </div>
-
-                <div className="col-md-3">
-                    <div className="card shadow-sm h-100">
-                        <div className="card-body">
-                            <h5 className="card-title">Manage Users</h5>
-                            <p className="card-text">Control user roles and accounts.</p>
-                            <button className="btn btn-outline-danger w-100" onClick={() => navigate('/AdminDashboard/ManageUsers')}>Manage Users</button>
-                        </div>
-                    </div>
+                <div className="dashboard-row-break" />
+                <div className="dashboard-card">
+                    <h5 className="dashboard-card-title">Manage Problems</h5>
+                    <p className="dashboard-card-text">View, update, or delete problems.</p>
+                    <button className="dashboard-btn dashboard-btn-accent" onClick={() => navigate('/AdminDashboard/ManageProblems')}>Manage Problems</button>
                 </div>
-
+                <div className="dashboard-card">
+                    <h5 className="dashboard-card-title">Manage Users</h5>
+                    <p className="dashboard-card-text">Control user roles and accounts.</p>
+                    <button className="dashboard-btn dashboard-btn-error" onClick={() => navigate('/AdminDashboard/ManageUsers')}>Manage Users</button>
+                </div>
             </div>
-
-            <div className="mt-5 text-center text-muted">
+            <div className="dashboard-footer">
                 <small>You have full control as an admin. Use it wisely!</small>
             </div>
         </div>

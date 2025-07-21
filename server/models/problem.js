@@ -14,6 +14,10 @@ const problemSchema = new mongoose.Schema({
     enum: ['Easy', 'Medium', 'Hard'],
     required: true,
   },
+  tags: {
+    type: [String],
+    default: [],
+  },
   inputFormat: {
     type: String,
     required: true,

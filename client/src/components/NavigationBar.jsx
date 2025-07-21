@@ -30,6 +30,7 @@ function NavigationBar() {
     const isLogin = location.pathname === '/login';
 
     let authLink = null;
+    let navLinks = null;
     let logOut = null;
 
     if (isHome) {
@@ -46,6 +47,22 @@ function NavigationBar() {
     }
 
     if (!isHome && !isRegister && !isLogin) {
+        // Determine user role for correct dashboard paths
+        const role = localStorage.getItem('role');
+        const basePath = role === 'admin' ? '/AdminDashboard' : '/UserDashboard';
+        navLinks = (
+            <ul className="navibar-nav">
+                <li>
+                    <Link className="navbar-link" to={`${basePath}/ProblemList`}>ProblemList</Link>
+                </li>
+                <li>
+                    <Link className="navbar-link" to={`${basePath}/MySubmissions`}>Submissions</Link>
+                </li>
+                <li>
+                    <Link className="navbar-link" to={`${basePath}/Compiler`}>Compiler</Link>
+                </li>
+            </ul>
+        );
         logOut = (
             <button className="button button-outline-danger" onClick={handleLogout}>Logout</button>
         );
@@ -63,6 +80,7 @@ function NavigationBar() {
                 <span>ByteCode</span>
             </div>
             {authLink}
+            {navLinks}
             {logOut}
         </nav>
     );
