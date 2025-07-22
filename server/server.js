@@ -14,8 +14,9 @@ DBconnection();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const allowedOrigins = [
-  "http://localhost:5173",                   // local dev
-  "https://oj-project-theta.vercel.app"      // deployed frontend
+  "http://localhost:5173",                   
+  "https://oj-project-theta.vercel.app",
+  "https://bytecode.sbs"       
 ];
 
 app.use(cors({
