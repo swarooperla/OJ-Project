@@ -91,6 +91,19 @@ export const getProbById = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+export const getHiddenTestcases = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const problem = await Problem.findById(id);
+    if (!problem) {
+      return res.status(404).json({ message: 'Problem not found' });
+    }
+    res.status(200).json(problem.hiddenTestcases);
+  } catch (error) {
+    console.error('Error fetching hidden testcases:', error);
+    res.status(500).json({ message: 'Server error', error });
+  }
+}
 
 export const updateProblem = async (req, res) => {
   const { id } = req.params;

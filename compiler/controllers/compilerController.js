@@ -7,7 +7,7 @@ import fs from "fs/promises";
 
 dotenv.config();
 
-const SERVER_API_URL = process.env.SERVER_API_URL;
+const SERVER_API_URL = process.env.API_URL;
 
 import path from "path";
 import executePython from "../services/executePython.js";
@@ -108,11 +108,11 @@ export const executeSubmit = async (req, res) => {
     }
 
     const response = await axios.get(
-      `${SERVER_API_URL}/api/problems/getProbById/${problemId}`
+      `${SERVER_API_URL}/api/problems/getHiddenTestcases/${problemId}`
     );
-    const problem = response.data;
+    const hiddenTestcases = response.data;
 
-    if (!problem?.hiddenTestcases?.length) {
+    if (!hiddenTestcases?.length) {
       return res
         .status(404)
         .json({ verdict: "No hidden test cases found for this problem" });
@@ -127,7 +127,7 @@ export const executeSubmit = async (req, res) => {
     let isErrorInCode = null;
     const tempFiles = [];
 
-    for (const test of problem.hiddenTestcases) {
+    for (const test of hiddenTestcases) {
       try {
         inputPath = generateInput(test.input);
         tempFiles.push(inputPath);
