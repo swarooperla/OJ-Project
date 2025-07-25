@@ -7,7 +7,7 @@ import fs from "fs/promises";
 
 dotenv.config();
 
-const SERVER_API_URL = process.env.API_URL;
+const SERVER_API_URL = process.env.SERVER_API_URL;
 
 import path from "path";
 import executePython from "../services/executePython.js";
