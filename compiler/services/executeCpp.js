@@ -46,7 +46,7 @@ const executeCpp = async (filePath, inputPath) => {
             return reject({
               type: "runtime",
               stderr,
-              message: "Runtime Error (stderr)",
+              message: "Runtime Error",
               outputFilePath,
             });
           }

@@ -25,7 +25,7 @@ const executeC = (filePath, inputPath) => {
         return reject({
           type: "compile",
           stderr: compileStderr,
-          message: "Compilation failed",
+          message: "Compilation Error",
         });
       }
 
@@ -35,7 +35,7 @@ const executeC = (filePath, inputPath) => {
           return reject({
             type: "timeout",
             stderr: "Time Limit Exceeded",
-            message: "Execution timed out",
+            message: "Time Limit Exceeded",
           });
         }
 

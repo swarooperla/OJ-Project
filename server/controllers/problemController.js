@@ -53,7 +53,12 @@ export const controlCreateProblem = async (req, res) => {
 export const getprobs = async (req, res) => {
   try {
     const problems = await Problem.find();
-    res.status(200).json(problems);
+    const problemObj = problems.map(problem => {
+      const problemObj = problem.toObject();
+      delete problemObj.hiddenTestcases;
+      return problemObj;
+    });
+    res.status(200).json(problemObj);
   } catch (error) {
     console.error('Error fetching problems:', error);
     res.status(500).json({ message: "Error fetching problems" });
@@ -78,7 +83,9 @@ export const getProbById = async (req, res) => {
     if (!problem) {
       return res.status(404).json({ message: 'Problem not found' });
     }
-    res.status(200).json(problem);
+    const problemObj = problem.toObject();
+    delete problemObj.hiddenTestcases;
+    res.status(200).json(problemObj);
   } catch (error) {
     console.error('Error fetching problem:', error);
     res.status(500).json({ message: 'Server error' });

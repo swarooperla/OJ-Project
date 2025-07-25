@@ -46,8 +46,8 @@ function Register() {
                 }
             }, 1000);
         } catch (error) {
-            console.log(error.response.data);
-            toast.error(error.response?.data?.message || "Registration failed");
+            console.log(error);
+            toast.error(error.response?.data || "Registration failed");
         } 
     };
 
@@ -57,11 +57,11 @@ function Register() {
                 <h2 className="register-title">Register</h2>
                 <form className="register-form" onSubmit={handleSubmit}>
                     <div className="register-form-group">
-                        <label htmlFor="fullname" className="register-label">Fullname</label>
+                        <label htmlFor="fullname" className="register-label">Full Name</label>
                         <input name="fullname" type="text" className="register-input" id="fullname" onChange={handleChange} />
                     </div>
                     <div className="register-form-group">
-                        <label htmlFor="email" className="register-label">Email address</label>
+                        <label htmlFor="email" className="register-label">Email Address</label>
                         <input name="email" type="email" className="register-input" id="email" onChange={handleChange} />
                     </div>
                     <div className="register-form-group">
@@ -69,7 +69,7 @@ function Register() {
                         <input name="password" type="password" className="register-input" id="password" onChange={handleChange} />
                     </div>
                     <div className="register-form-group">
-                        <label htmlFor="confirmPassword" className="register-label">Confirm password</label>
+                        <label htmlFor="confirmPassword" className="register-label">Confirm Password</label>
                         <input name="confirmpassword" type="password" className="register-input" id="confirmPassword" onChange={handleChange}  />
                     </div>
                     <button type="submit" className="register-btn">Register</button>

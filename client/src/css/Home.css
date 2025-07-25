@@ -325,3 +325,22 @@
   background: var(--color-white);
   color: var(--color-primary);
 }
+
+@media (max-width: 480px) {
+  .home-container {
+    padding: var(--space-8) var(--space-2);
+  }
+  .home-hero {
+    padding: var(--space-32) var(--space-2);
+    font-size: 1.2rem;
+  }
+  .feature-card, .enlarged-feature-card, .stat-card, .testimonial-card, .badge-card, .card {
+    min-width: 0;
+    max-width: 98vw;
+    padding: var(--space-8);
+    font-size: 0.98rem;
+  }
+  .card-section, .home-features, .testimonial-list, .badge-list {
+    gap: var(--space-8);
+  }
+}

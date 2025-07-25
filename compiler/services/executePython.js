@@ -25,7 +25,7 @@
             return reject({
             type: "timeout",
             stderr: "Time Limit Exceeded",
-            message: "Execution timed out",
+            message: "Time Limit Exceeded",
             outputFilePath,
             });
         }
@@ -43,7 +43,7 @@
             return reject({
             type: "runtime",
             stderr,
-            message: "Runtime Error (stderr)",
+            message: "Runtime Error",
             outputFilePath,
             });
         }

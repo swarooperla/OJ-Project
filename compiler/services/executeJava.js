@@ -23,7 +23,7 @@ const executeJava = async (filePath, inputPath) => {
     exec(compileCmd, (compileError, _, compileStderr) => {
       if (compileError || compileStderr) {
         return reject({
-          type: "compile-time",
+          type: "Compilation Error",
           stderr: compileStderr || compileError.message,
           message: "Compilation Error",
           outputFilePath,
@@ -37,7 +37,7 @@ const executeJava = async (filePath, inputPath) => {
           return reject({
             type: "timeout",
             stderr: "Time Limit Exceeded",
-            message: "Execution timed out",
+            message: "Time Limit Exceeded",
             outputFilePath,
           });
         }

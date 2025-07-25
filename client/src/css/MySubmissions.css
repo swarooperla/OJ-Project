@@ -134,4 +134,15 @@
     align-items: flex-start;
     gap: var(--space-8);
   }
+}
+
+@media (max-width: 480px) {
+  .submission-card {
+    padding: var(--space-8) var(--space-2);
+    max-width: 98vw;
+  }
+  .submission-meta {
+    gap: var(--space-4);
+    font-size: 0.95rem;
+  }
 } 

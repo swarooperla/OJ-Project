@@ -141,4 +141,15 @@
     min-width: 0;
     padding: var(--space-24) var(--space-8);
   }
+}
+
+@media (max-width: 480px) {
+  .dashboard-card {
+    padding: var(--space-8) var(--space-2);
+    max-width: 98vw;
+    font-size: 0.98rem;
+  }
+  .dashboard-header, .dashboard-footer {
+    padding: var(--space-8) var(--space-2);
+  }
 } 

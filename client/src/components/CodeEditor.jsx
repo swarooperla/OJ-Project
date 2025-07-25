@@ -10,7 +10,7 @@ const COMPILER_URL = import.meta.env.VITE_COMPILER_API_URL;
 
 function CodeEditor() {
   const boilerplates = {
-    cpp: `#include <iostream>
+    cpp: `#include <bits/stdc++.h>
 using namespace std;
 
 int main() {
@@ -46,6 +46,8 @@ int main() {
   };
 
   const { id } = useParams();
+  const user = JSON.parse(localStorage.getItem("user"));
+  const userId = user?._id || "guest";
   const [problem, setProblem] = useState(null);
   const [code, setCode] = useState(boilerplates["cpp"]);
   const [output1, setOutput1] = useState("");
@@ -62,6 +64,10 @@ int main() {
   const [aiLoading, setAiLoading] = useState(false);
   const [selectedCode, setSelectedCode] = useState(null);
   const [submissions, setSubmissions] = useState([]);
+  const [showLoginMessage, setShowLoginMessage] = useState(false);
+  const [showLoginSubmitMessage, setShowLoginSubmitMessage] = useState(false);
+  const [showLoginSubmissionsMessage, setShowLoginSubmissionsMessage] = useState(false);
+  const [showLoginAIReviewMessage, setShowLoginAIReviewMessage] = useState(false);
 
   useEffect(() => {
     const fetchProblem = async () => {
@@ -98,6 +104,12 @@ int main() {
     fetchSubmissions();
   }, [id]);
 
+  useEffect(() => {
+    const saved = localStorage.getItem(`code_${userId}_${id}_${language}`);
+    setCode(saved || boilerplates[language]);
+    
+  }, [id, language, userId]);
+
   const getDifficultyColorClass = (level) => {
     switch ((level || "").toLowerCase()) {
       case "easy":
@@ -111,7 +123,37 @@ int main() {
     }
   };
 
+  // Utility to clean markdown formatting from AI review
+  const cleanAIText = (text) => {
+    if (!text) return "";
+    return text
+      .replace(/```[a-zA-Z]*\n?/g, "") // Remove ``` and language after ```
+      .replace(/```/g, "")              // Remove any remaining ```
+      .replace(/\*\*/g, "")           // Remove **
+      .replace(/__+/g, "")              // Remove __
+      .replace(/\n{3,}/g, "\n\n")    // Replace 3+ newlines with 2
+      .trim();
+  };
+
+  const cleanErrorOutput = (text) => {
+    if (!text) return "";
+    // Remove any file path ending with .cpp/.c/.java/.py and the colon, anywhere in the line
+    return text
+      .split('\n')
+      .map(line =>
+        line.replace(/([A-Za-z]:)?[^\s:]+\.(cpp|c|java|python):/g, "")
+      )
+      .join('\n')
+      .replace(/^[ \t]+/gm, "") // Remove leading whitespace
+      .replace(/\n{3,}/g, "\n\n") // Collapse 3+ newlines
+      .trim();
+  };
+
   const handleAIReview = async () => {
+    if (!localStorage.getItem("token")) {
+      setShowLoginAIReviewMessage(true);
+      return;
+    }
     setActiveTab("ai");
     setAiLoading(true);
     setAiReview("");
@@ -119,7 +161,7 @@ int main() {
       const res = await axios.post(import.meta.env.VITE_GOOGLE_GEMINI_API_URL, {
         code,
       });
-      setAiReview(res.data.aiResponse);
+      setAiReview(cleanAIText(res.data.aiResponse));
     } catch (err) {
       console.error(err);
       setAiReview("❌ AI Review failed.");
@@ -152,7 +194,7 @@ int main() {
       setOutput2(res2.data.output);
     } catch (error) {
       console.log(error);
-      setOutput1(`Failed to run code!!: ${error.response.data.error}`);
+      setOutput1(`${error.response.data.errorMsg}: \n ${error.response.data.error}`);
       //   setOutput2("Failed to run code!!");
     } finally {
       setIsRunning(false);
@@ -160,6 +202,10 @@ int main() {
   };
 
   const handleSubmit = async () => {
+    if (!localStorage.getItem("token")) {
+      setShowLoginSubmitMessage(true);
+      return;
+    }
     setIsSubmitting(true);
     setIsRunning(false);
     setMode("submit");
@@ -172,8 +218,13 @@ int main() {
         code,
         problemId: id,
       });
+      console.log(res.data);
       const verdict = res.data.verdict;
+      const errorInCode = res.data.errorInCode;
       setOutput1(verdict);
+      if (errorInCode) {
+        setOutput1(`${errorInCode.errorMsg}: \n ${errorInCode.errorData}`);
+      }
       const user = JSON.parse(localStorage.getItem("user"));
       await axios.post(`${API_URL}/api/submissions/addSubmission`, {
         userId: user?._id,
@@ -240,6 +291,134 @@ int main() {
   return (
     <>
       <NavigationBar />
+      {showLoginMessage && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          background: 'rgba(0,0,0,0.35)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 9999
+        }}>
+          <div style={{
+            background: 'var(--color-surface)',
+            color: 'var(--color-text)',
+            borderRadius: 'var(--radius-lg)',
+            boxShadow: 'var(--shadow-card)',
+            padding: '32px 24px',
+            minWidth: '300px',
+            maxWidth: '90vw',
+            textAlign: 'center',
+          }}>
+            <div style={{ fontSize: '1.1rem', marginBottom: 24, fontFamily: 'var(--font-heading)', fontWeight: 600 }}>
+              Login to see your submissions
+            </div>
+            <button className="button" onClick={() => setShowLoginMessage(false)}>
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+      {showLoginSubmitMessage && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          background: 'rgba(0,0,0,0.35)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 9999
+        }}>
+          <div style={{
+            background: 'var(--color-surface)',
+            color: 'var(--color-text)',
+            borderRadius: 'var(--radius-lg)',
+            boxShadow: 'var(--shadow-card)',
+            padding: '32px 24px',
+            minWidth: '300px',
+            maxWidth: '90vw',
+            textAlign: 'center',
+          }}>
+            <div style={{ fontSize: '1.1rem', marginBottom: 24, fontFamily: 'var(--font-heading)', fontWeight: 600 }}>
+              Login to submit the code
+            </div>
+            <button className="button" onClick={() => setShowLoginSubmitMessage(false)}>
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+      {showLoginSubmissionsMessage && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          background: 'rgba(0,0,0,0.35)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 9999
+        }}>
+          <div style={{
+            background: 'var(--color-surface)',
+            color: 'var(--color-text)',
+            borderRadius: 'var(--radius-lg)',
+            boxShadow: 'var(--shadow-card)',
+            padding: '32px 24px',
+            minWidth: '300px',
+            maxWidth: '90vw',
+            textAlign: 'center',
+          }}>
+            <div style={{ fontSize: '1.1rem', marginBottom: 24, fontFamily: 'var(--font-heading)', fontWeight: 600 }}>
+              Login to see your submissions
+            </div>
+            <button className="button" onClick={() => setShowLoginSubmissionsMessage(false)}>
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+      {showLoginAIReviewMessage && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          background: 'rgba(0,0,0,0.35)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 9999
+        }}>
+          <div style={{
+            background: 'var(--color-surface)',
+            color: 'var(--color-text)',
+            borderRadius: 'var(--radius-lg)',
+            boxShadow: 'var(--shadow-card)',
+            padding: '32px 24px',
+            minWidth: '300px',
+            maxWidth: '90vw',
+            textAlign: 'center',
+          }}>
+            <div style={{ fontSize: '1.1rem', marginBottom: 24, fontFamily: 'var(--font-heading)', fontWeight: 600 }}>
+              Login to see AI Review of your code
+            </div>
+            <button className="button" onClick={() => setShowLoginAIReviewMessage(false)}>
+              Close
+            </button>
+          </div>
+        </div>
+      )}
       <div className="editor-wrapper">
         <div className="tab-header">
           <button
@@ -249,7 +428,13 @@ int main() {
             Description
           </button>
           <button
-            onClick={() => setActiveTab("submissions")}
+            onClick={() => {
+              if (!localStorage.getItem("token")) {
+                setShowLoginSubmissionsMessage(true);
+                return;
+              }
+              setActiveTab("submissions");
+            }}
             className={activeTab === "submissions" ? "active" : ""}
           >
             Submissions
@@ -301,16 +486,23 @@ int main() {
               </div>
             )}
             {activeTab === "ai" && (
-              <div className="ai-box">
+              <div className="ai-box ai-review-vertical">
                 <h4>AI Review</h4>
                 {aiLoading ? (
-                  <div className="spinner" />
+                  <div className="ai-review-text">AI is checking....</div>
                 ) : (
-                  <pre>{aiReview || "Waiting for response..."}</pre>
+                  <pre className="ai-review-text">{aiReview || "Waiting for response..."}</pre>
                 )}
               </div>
             )}
-            {activeTab === "submissions" && (
+            {activeTab === "submissions" && !localStorage.getItem("token") ? (
+              <div className="submissions-box">
+                <h4>Submissions</h4>
+                <div style={{ color: 'var(--color-error)', fontWeight: 600, margin: '24px 0' }}>
+                  Login to see your submissions
+                </div>
+              </div>
+            ) : activeTab === "submissions" && (
               <div className="submissions-box">
                 <h4>Submissions</h4>
                 {loading ? (
@@ -387,7 +579,10 @@ int main() {
                   bottom: 10,
                 },
               }}
-              onChange={(value) => setCode(value)}
+              onChange={(value) => {
+                setCode(value);
+                localStorage.setItem(`code_${userId}_${id}_${language}`, value);
+              }}
             />
 
             <div className="button-group">
@@ -428,12 +623,20 @@ int main() {
                 {isRunning || isSubmitting ? (
                   <p>Executing...</p>
                 ) : (
-                  <pre>
-                    {mode === "run" &&
-                      `Output-1:\n${output1}\nOutput-2:\n${output2}`}
-                    {mode === "submit" && output1}
-                    {mode === "custom" && customOutput}
-                  </pre>
+                  <>
+                    {mode === "run" && (
+                      <>
+                        {output1 && <pre className="output-text">{cleanErrorOutput(output1)}</pre>}
+                        {output2 && <pre className="output-text">{cleanErrorOutput(output2)}</pre>}
+                      </>
+                    )}
+                    {mode === "submit" && (
+                      <pre className="output-text">{cleanErrorOutput(output1)}</pre>
+                    )}
+                    {mode === "custom" && (
+                      <pre className="output-text">{cleanErrorOutput(customOutput)}</pre>
+                    )}
+                  </>
                 )}
               </div>
             )}

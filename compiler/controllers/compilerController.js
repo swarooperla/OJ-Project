@@ -81,10 +81,11 @@ export const executeRun = async (req, res) => {
       outputFilePath = error.outputFilePath;
     }
     await cleanupFiles([filePath, inputPath, outputFilePath]);
-  console.log(error);
+    console.log(error);
     res.status(500).json({
       output: "❌ Server error during execution",
-      error: error.message,
+      error: error.stderr || ' ',
+      errorMsg: error.message,
     });
   } finally {
     if (filePath && inputPath && outputFilePath) {
@@ -123,7 +124,7 @@ export const executeSubmit = async (req, res) => {
 
     let allPassed = true;
     let verdict = "Accepted";
-    let failedCase = null;
+    let isErrorInCode = null;
     const tempFiles = [];
 
     for (const test of problem.hiddenTestcases) {
@@ -157,27 +158,16 @@ export const executeSubmit = async (req, res) => {
         if (normalize(output) !== normalize(test.output)) {
           allPassed = false;
           verdict = "Wrong Answer";
-          failedCase = {
-            input: test.input,
-            expected: test.output,
-            received: output,
-          };
           break;
         }
       } catch (err) {
         await cleanupFiles([filePath, inputPath, outputFilePath]);
         allPassed = false;
-        verdict =
-          {
-            compilation: "Compilation Error",
-            runtime: "Runtime Error",
-            timeout: "Time Limit Exceeded",
-          }[err.type] || "Unknown Error";
+        verdict = err.message|| "Unknown Error";
 
-        failedCase = {
-          input: test.input,
-          expected: test.output,
-          received: err.stderr || err.message || "Error during execution",
+        isErrorInCode = {
+          errorData: err.stderr,
+          errorMsg: err.message,
         };
 
         break;
@@ -188,7 +178,7 @@ export const executeSubmit = async (req, res) => {
     await cleanupFiles(tempFiles); // ✅ Cleanup all temp files
 
     const responsePayload = { verdict };
-    if (isDev && failedCase) responsePayload.failedCase = failedCase;
+    if (isDev && isErrorInCode) responsePayload.errorInCode = isErrorInCode;
 
     return res.status(200).json(responsePayload);
   } catch (error) {
@@ -196,7 +186,7 @@ export const executeSubmit = async (req, res) => {
     console.error("❌ Submit failed:", error);
     return res.status(500).json({
       verdict: "❌ Server error during submission",
-      error: error.message,
+      error: error.stderr || error.message,
     });
   }
 };

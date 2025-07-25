@@ -219,4 +219,14 @@
     width: 100%;
     text-align: left;
   }
+}
+
+@media (max-width: 480px) {
+  .problem-list-card {
+    padding: var(--space-8) var(--space-2);
+  }
+  .problem-list-header-row, .problem-list-row {
+    gap: var(--space-4);
+    font-size: 0.95rem;
+  }
 } 

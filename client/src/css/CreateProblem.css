@@ -168,4 +168,14 @@ form.problem-form {
     flex-direction: column;
     gap: var(--space-8);
   }
+}
+
+@media (max-width: 480px) {
+  .problem-form-card {
+    padding: var(--space-8) var(--space-2);
+    max-width: 98vw;
+  }
+  .problem-form-row {
+    gap: var(--space-4);
+  }
 } 

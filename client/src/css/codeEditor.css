@@ -133,6 +133,23 @@
   margin-bottom: var(--space-8);
 }
 
+.output-text {
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 120px;
+  max-height: 350px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  background: rgba(255,255,255,0.08);
+  border-radius: var(--radius-md);
+  padding: var(--space-16);
+  color: var(--color-text);
+  margin: 0;
+  font-size: 1.08rem;
+  line-height: 1.7;
+}
+
 .ai-box {
   background-color: var(--color-warning);
   color: var(--color-text);
@@ -140,6 +157,50 @@
   border: 1px solid var(--color-warning);
   border-radius: var(--radius-md);
   font-family: var(--font-code);
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  box-shadow: var(--shadow-card);
+  margin-bottom: var(--space-16);
+}
+
+/* AI Review vertical and color styling */
+.ai-review-vertical {
+  background: #23272f;
+  color: var(--color-text);
+  min-height: 350px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-24);
+  border: 1.5px solid var(--color-success);
+}
+
+.ai-review-vertical h4 {
+  color: var(--color-primary);
+  margin-bottom: var(--space-16);
+}
+
+.ai-review-text {
+  flex: 1 1 auto;
+  width: 100%;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-y: auto;
+  font-size: 1.08rem;
+  line-height: 1.7;
+  background: rgba(255,255,255,0.12);
+  border-radius: var(--radius-md);
+  padding: var(--space-16);
+  color: var(--color-text);
+  margin: 0;
+  min-height: 200px;
+  max-height: 350px;
 }
 
 .loading-screen {
@@ -254,4 +315,21 @@
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: rgba(59,130,246,0.08) transparent;
+}
+
+@media (max-width: 900px) {
+  .editor-content {
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+  .left-panel, .right-panel {
+    width: 100%;
+    min-width: 0;
+    padding: var(--space-8);
+  }
+  .modal-content {
+    width: 98vw;
+    height: 80vh;
+    padding: var(--space-16);
+  }
 }

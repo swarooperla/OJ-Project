@@ -159,4 +159,15 @@
     align-items: flex-start;
     gap: var(--space-16);
   }
+}
+
+@media (max-width: 480px) {
+  .manage-problem-card {
+    padding: var(--space-8) var(--space-2);
+    max-width: 98vw;
+    font-size: 0.98rem;
+  }
+  .manage-problems-header {
+    padding: var(--space-8) var(--space-2);
+  }
 } 
