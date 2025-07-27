@@ -13,7 +13,54 @@ A comprehensive online judge platform for coding competitions and practice, feat
 
 ## 📸 Screenshots
 
-![Screenshots](./photos/README.md)
+### 🏠 **Homepage & Dashboard**
+![Homepage](./photos/homepage.png)
+*Clean and modern landing page with intuitive navigation*
+
+![User Dashboard](./photos/dashboard.png)
+*Personalized user dashboard with statistics and recent submissions*
+
+### 💻 **Code Editor & Compilation**
+![Code Editor](./photos/code-editor.png)
+*Interactive code editor with syntax highlighting and multi-language support*
+
+![Compilation Results](./photos/compilation-results.png)
+*Real-time compilation feedback with test case results*
+
+### 📝 **Problem Management**
+![Problem List](./photos/problem-list.png)
+*Comprehensive problem listing with difficulty levels and categories*
+
+![Problem Details](./photos/problem-details.png)
+*Detailed problem description with sample test cases*
+
+### 👥 **User Management & Authentication**
+![Login Page](./photos/login.png)
+*Secure user authentication interface*
+
+![Registration](./photos/registration.png)
+*User-friendly registration process*
+
+### 📊 **Analytics & Leaderboard**
+![Leaderboard](./photos/leaderboard.png)
+*Competitive programming leaderboard with rankings*
+
+![User Statistics](./photos/user-stats.png)
+*Detailed performance analytics and submission history*
+
+### ⚙️ **Admin Panel**
+![Admin Dashboard](./photos/admin-dashboard.png)
+*Comprehensive admin interface for platform management*
+
+![Problem Creation](./photos/admin-problem-creation.png)
+*Admin tool for creating and managing problems*
+
+### 🤖 **AI Features**
+![AI Assistance](./photos/ai-assistance.png)
+*AI-powered code hints and debugging help*
+
+![Code Analysis](./photos/code-analysis.png)
+*Intelligent code analysis and optimization suggestions*
 
 ## 🛠️ Tech Stack
 
